@@ -24,7 +24,7 @@ public abstract class AbstractShape implements IMosaiqueShape
      */
     protected AbstractShape(BufferedArtImage image, int width, int height)
     {
-        this.image = ImageUtils.scaleAndCrop(Objects.requireNonNull(image), width, height);
+        this.image = ImageUtils.scale(Objects.requireNonNull(image), width, height);
         this.calc = getCalculator();
         this.average = this.calc.averageColor(this.image);
     }
@@ -50,7 +50,7 @@ public abstract class AbstractShape implements IMosaiqueShape
     {
         if (targetRect.getWidth() > this.getWidth() || targetRect.getHeight() > this.getHeight())
         {
-            throw new IllegalArgumentException("dimensions of target are too big for this tile");
+            throw new IllegalArgumentException("Dimensions of target are too big for this tile");
         }
 
         int width = Math.min(this.getWidth(), targetRect.getWidth());

@@ -14,9 +14,6 @@ import com.image.mosaique.base.IMosaiqueArtist;
 
 public abstract class AbstractArtist implements IMosaiqueArtist
 {
-
-    private static final double EPSILON = 1E-8;
-
     protected final int tileWidth;
     protected final int tileHeight;
 
@@ -50,7 +47,7 @@ public abstract class AbstractArtist implements IMosaiqueArtist
     {
         if (region.getWidth() > this.tileWidth || region.getHeight() > this.tileHeight)
         {
-            throw new IllegalArgumentException("requested tiling is greater than tileWidth or tileHeight");
+            throw new IllegalArgumentException("Requested tiling is greater than tileWidth or tileHeight");
         }
         BufferedArtImage result = region.createBlankImage();
         drawTileForRegion(region.toBufferedImage(), result);
@@ -83,31 +80,24 @@ public abstract class AbstractArtist implements IMosaiqueArtist
     {
         List<AbstractShape> nearest = new ArrayList<>();
 
-        Iterator<AbstractShape> iter = shapes.iterator();
-        AbstractShape shape = iter.next();
+        Iterator<AbstractShape> shapesIterator = shapes.iterator();
+        AbstractShape shape = shapesIterator.next();
         nearest.add(shape);
 
         double dist = colorError(target, shape.getAverageColor());
 
-        while (iter.hasNext())
+        while (shapesIterator.hasNext())
         {
-            AbstractShape next = iter.next();
+            AbstractShape next = shapesIterator.next();
             double nextDist = colorError(target, next.getAverageColor());
 
-            if (Math.abs(dist - nextDist) < EPSILON)
+            if (Double.compare(nextDist, dist) < 0)
             {
-                // Distances equal
-                nearest.add(next);
-            }
-            else if (nextDist < dist)
-            {
-                // New smallest
                 nearest.clear();
                 nearest.add(next);
                 dist = nextDist;
             }
         }
-
         return nearest.get((int)(Math.random() * nearest.size()));
     }
 
@@ -116,7 +106,7 @@ public abstract class AbstractArtist implements IMosaiqueArtist
      * Calculate the difference between two argb colors as euclidean distance.<br>
      * Range: [0, sqrt(4 * pow(255, 2))]
      *
-     * @param colorA  the first color
+     * @param colorA the first color
      * @param colorB the second color
      * @return the difference of the colors
      */
@@ -124,10 +114,12 @@ public abstract class AbstractArtist implements IMosaiqueArtist
     {
         Color a = new Color(colorA, true);
         Color b = new Color(colorB, true);
+
         int colorError = (int)Math.pow(a.getRed() - b.getRed(), 2);
         colorError += (int)Math.pow(a.getGreen() - b.getGreen(), 2);
         colorError += (int)Math.pow(a.getBlue() - b.getBlue(), 2);
         colorError += (int)Math.pow(a.getAlpha() - b.getAlpha(), 2);
+
         return Math.sqrt(colorError);
     }
 }

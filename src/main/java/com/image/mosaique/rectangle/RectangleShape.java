@@ -16,9 +16,9 @@ public class RectangleShape extends AbstractShape
     /**
      * Create a new {@link IMosaiqueShape}.
      *
-     * @param image the image to use
-     * @param width     the width
-     * @param height     the height
+     * @param image  the image to use
+     * @param width  the width
+     * @param height the height
      */
     public RectangleShape(BufferedArtImage image, int width, int height)
     {

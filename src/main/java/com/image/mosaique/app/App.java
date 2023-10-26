@@ -17,9 +17,12 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import com.image.mosaique.MosaiqueEasel;
+import com.image.mosaique.AbstractArtist;
+import com.image.mosaique.MosaiqueMaker;
 import com.image.mosaique.base.BufferedArtImage;
+import com.image.mosaique.crossed.CrossedRectangleArtist;
 import com.image.mosaique.rectangle.RectangleArtist;
+import com.image.mosaique.triangle.TriangleArtist;
 
 
 /**
@@ -51,9 +54,21 @@ public final class App
             System.exit(1);
         }
 
-        MosaiqueEasel mosaiqueEasel = new MosaiqueEasel();
-        RectangleArtist rectangleArtist = new RectangleArtist(tiles, tileWidth, tileHeight);
-        BufferedImage outputImage = mosaiqueEasel.createMosaique(inputImage, rectangleArtist);
+        MosaiqueMaker mosaiqueEasel = new MosaiqueMaker();
+        AbstractArtist artist = null;
+        if (args[5].equals("Rectangle"))
+        {
+            artist = new RectangleArtist(tiles, tileWidth, tileHeight);
+        }
+        else if (args[5].equals("Triangle"))
+        {
+            artist = new TriangleArtist(tiles, tileWidth, tileHeight);
+        }
+        else
+        {
+            artist = new CrossedRectangleArtist(tiles, tileWidth, tileHeight);
+        }
+        BufferedImage outputImage = mosaiqueEasel.createMosaique(inputImage, artist);
 
         writeOutput(args[2], outputImage);
 

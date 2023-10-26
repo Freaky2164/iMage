@@ -1,6 +1,8 @@
 package com.image.mosaique.triangle;
 
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.stream.IntStream;
 
@@ -37,8 +39,34 @@ public final class UpperTriangleCalculator extends AbstractCalculator
     @Override
     protected Iterator<Integer> getIteratorForColumn(int w, int h, int x)
     {
-        float m = (1F * h) / w;
-        float yBound = Math.min((x + 1) * m, h);
+        float yBound = Math.min(x + 1, h);
         return IntStream.range(0, (int)Math.floor(yBound)).iterator();
+    }
+
+
+    public int averageColor(BufferedImage region)
+    {
+        long r = 0;
+        long g = 0;
+        long b = 0;
+        long a = 0;
+        int sum = 0;
+
+        for (int x = 0; x < region.getWidth(); x++)
+        {
+            float yBound = Math.min(x + 1, region.getHeight());
+            for (int y = 0; y < yBound; y++)
+            {
+                int pixelRGB = region.getRGB(x, y);
+
+                Color c = new Color(pixelRGB, true);
+                r += c.getRed();
+                g += c.getGreen();
+                b += c.getBlue();
+                a += c.getAlpha();
+                sum++;
+            }
+        }
+        return new Color((int)(r / sum), (int)(g / sum), (int)(b / sum), (int)(a / sum)).getRGB();
     }
 }

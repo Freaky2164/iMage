@@ -21,7 +21,7 @@ public class BufferedArtImage
 
     public BufferedArtImage(int width, int height)
     {
-        this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         this.width = width;
         this.height = height;
     }
@@ -68,8 +68,7 @@ public class BufferedArtImage
 
     public void setSubimage(int x, int y, BufferedArtImage tile)
     {
-        BufferedImage subimage = this.image.getSubimage(x, y, tile.width, tile.height);
-        Graphics2D graphics2d = subimage.createGraphics();
+        Graphics2D graphics2d = this.toBufferedImage().createGraphics();
         graphics2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
         graphics2d.drawImage(tile.toBufferedImage(), x, y, null);
         graphics2d.dispose();

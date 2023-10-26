@@ -29,7 +29,7 @@ import com.image.mosaique.base.IMosaiqueShape;
  *   |          \  |
  *   | LOWER     \ |
  *   |            \|
- *   |-----------(w,h)
+ *   |---------(w-1,h-1)
  * </pre>
  *
  */
@@ -38,16 +38,13 @@ public class LowerTriangleShape extends AbstractShape
     /**
      * Create a new {@link IMosaiqueShape} by image.
      *
-     * @param image
-     *              the image to use
-     * @param w
-     *              the width
-     * @param h
-     *              the height
+     * @param image  the image to use
+     * @param width  the width
+     * @param height the height
      */
-    public LowerTriangleShape(BufferedArtImage image, int w, int h)
+    public LowerTriangleShape(BufferedArtImage image, int width, int height)
     {
-        super(image, w, h);
+        super(image, width, height);
     }
 
 

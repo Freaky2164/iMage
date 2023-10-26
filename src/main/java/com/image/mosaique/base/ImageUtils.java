@@ -7,16 +7,20 @@
  */
 package com.image.mosaique.base;
 
+
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+
 
 public class ImageUtils
 {
 
-    public static BufferedImage scaleAndCrop(BufferedArtImage requireNonNull, int w, int h)
+    public static BufferedImage scale(BufferedArtImage originalImage, int targetWidth, int targetHeight)
     {
-        return requireNonNull.toBufferedImage();
+        BufferedImage scaledImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics2d = scaledImage.createGraphics();
+        graphics2d.drawImage(originalImage.toBufferedImage(), 0, 0, targetWidth, targetHeight, null);
+        graphics2d.dispose();
+        return scaledImage;
     }
 }
-
-
-

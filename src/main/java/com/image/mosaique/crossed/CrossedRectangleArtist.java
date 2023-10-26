@@ -25,14 +25,10 @@ public class CrossedRectangleArtist extends AbstractArtist
     /**
      * Create an artist who works with {@link AbstractShape CrossedShapes}
      *
-     * @param images
-     *                   the images for the tiles
-     * @param tileWidth
-     *                   the desired width of the tiles
-     * @param tileHeight
-     *                   the desired height of the tiles
-     * @throws IllegalArgumentException
-     *                                  iff tileWidth or tileHeight &lt;= 0, or images is empty.
+     * @param images     the images for the tiles
+     * @param tileWidth  the desired width of the tiles
+     * @param tileHeight the desired height of the tiles
+     * @throws IllegalArgumentException if tileWidth or tileHeight are 0 or images is empty.
      */
     public CrossedRectangleArtist(Collection<BufferedArtImage> images, int tileWidth,
                                   int tileHeight)
@@ -61,19 +57,32 @@ public class CrossedRectangleArtist extends AbstractArtist
     @Override
     public void drawTileForRegion(BufferedImage region, BufferedArtImage target)
     {
-        int averageUpper = UpperCalculator.getInstance().averageColor(region);
-        int averageLower = LowerCalculator.getInstance().averageColor(region);
-        int averageLeft = LeftCalculator.getInstance().averageColor(region);
-        int averageRight = RightCalculator.getInstance().averageColor(region);
+        if (canBeDrawn(region))
+        {
+            int averageUpper = UpperCalculator.getInstance().averageColor(region);
+            int averageLower = LowerCalculator.getInstance().averageColor(region);
+            int averageLeft = LeftCalculator.getInstance().averageColor(region);
+            int averageRight = RightCalculator.getInstance().averageColor(region);
 
-        var upperImage = findNearest(averageUpper, upper);
-        var lowerImage = findNearest(averageLower, lower);
-        var leftImage = findNearest(averageLeft, left);
-        var rightImage = findNearest(averageRight, right);
+            var upperImage = findNearest(averageUpper, upper);
+            var lowerImage = findNearest(averageLower, lower);
+            var leftImage = findNearest(averageLeft, left);
+            var rightImage = findNearest(averageRight, right);
 
-        upperImage.drawMe(target);
-        lowerImage.drawMe(target);
-        leftImage.drawMe(target);
-        rightImage.drawMe(target);
+            upperImage.drawMe(target);
+            lowerImage.drawMe(target);
+            leftImage.drawMe(target);
+            rightImage.drawMe(target);
+        }
+        else
+        {
+            throw new IllegalArgumentException("Width and Height have to be equal and greater than 4");
+        }
+    }
+
+
+    private boolean canBeDrawn(BufferedImage region)
+    {
+        return region.getWidth() == region.getHeight() && region.getWidth() * region.getHeight() > 4;
     }
 }

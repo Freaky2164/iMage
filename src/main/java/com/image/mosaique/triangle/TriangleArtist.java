@@ -27,7 +27,7 @@ public class TriangleArtist extends AbstractArtist
      * @param images     the images for the tiles
      * @param tileWidth  the desired width of the tiles
      * @param tileHeight the desired height of the tiles
-     * @throws IllegalArgumentException if tileWidth or tileHeight &lt;= 0, or images is empty.
+     * @throws IllegalArgumentException if tileWidth or tileHeight are 0, or images is empty.
      */
     public TriangleArtist(Collection<BufferedArtImage> images, int tileWidth, int tileHeight)
     {
@@ -51,14 +51,26 @@ public class TriangleArtist extends AbstractArtist
     @Override
     public void drawTileForRegion(BufferedImage region, BufferedArtImage target)
     {
-        int averageUpper = UpperTriangleCalculator.getInstance().averageColor(region);
-        int averageLower = LowerTriangleCalculator.getInstance().averageColor(region);
+        if (canBeDrawn(region))
+        {
+            int averageUpper = UpperTriangleCalculator.getInstance().averageColor(region);
+            int averageLower = LowerTriangleCalculator.getInstance().averageColor(region);
 
-        var upperImage = findNearest(averageUpper, upper);
-        var lowerImage = findNearest(averageLower, lower);
+            var upperImage = findNearest(averageUpper, upper);
+            var lowerImage = findNearest(averageLower, lower);
 
-        upperImage.drawMe(target);
-        lowerImage.drawMe(target);
+            upperImage.drawMe(target);
+            lowerImage.drawMe(target);
+        }
+        else
+        {
+            throw new IllegalArgumentException("Width and Height have to be equal and greater than 1");
+        }
     }
 
+
+    private boolean canBeDrawn(BufferedImage region)
+    {
+        return region.getWidth() == region.getHeight() && region.getWidth() * region.getHeight() > 1;
+    }
 }
