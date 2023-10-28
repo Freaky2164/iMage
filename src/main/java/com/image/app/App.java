@@ -5,7 +5,7 @@
  *
  * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
  */
-package com.image.mosaique.app;
+package com.image.app;
 
 
 import java.awt.image.BufferedImage;
@@ -28,25 +28,26 @@ import com.image.mosaique.triangle.TriangleArtist;
 /**
  * This class parses all command line parameters and creates a mosaique.
  */
-public final class App
+public class App
 {
 
     public static void main(String[] args)
     {
-        if (args.length < 5)
-        {
-            System.exit(1);
-        }
+        new MosaiqueWindow();
+    }
 
+
+    public static void createMosaique(String width, String height, String shape)
+    {
         System.out.println("Starting to create mosaic");
 
-        BufferedImage inputImage = loadInput(args[0]);
-        List<BufferedArtImage> tiles = loadTiles(args[1]);
+        BufferedImage inputImage = loadInput("C:\\Users\\p.faller\\Documents\\GitHub\\iMage\\src\\main\\resources\\com\\image\\mosaique\\input\\Beispielbild1.jpg");
+        List<BufferedArtImage> tiles = loadTiles("C:\\Users\\p.faller\\Documents\\GitHub\\iMage\\src\\main\\resources\\com\\image\\mosaique\\tiles");
 
         System.out.println("Loaded input image and tiles");
 
-        int tileWidth = Integer.parseInt(args[3]);
-        int tileHeight = Integer.parseInt(args[4]);
+        int tileWidth = Integer.parseInt(width);
+        int tileHeight = Integer.parseInt(height);
 
         if (tileWidth <= 0 || tileHeight <= 0 || tileWidth > inputImage.getWidth() || tileHeight > inputImage.getHeight())
         {
@@ -56,11 +57,11 @@ public final class App
 
         MosaiqueMaker mosaiqueEasel = new MosaiqueMaker();
         AbstractArtist artist = null;
-        if (args[5].equals("Rectangle"))
+        if (shape.equals("Rectangle"))
         {
             artist = new RectangleArtist(tiles, tileWidth, tileHeight);
         }
-        else if (args[5].equals("Triangle"))
+        else if (shape.equals("Triangle"))
         {
             artist = new TriangleArtist(tiles, tileWidth, tileHeight);
         }
@@ -70,7 +71,7 @@ public final class App
         }
         BufferedImage outputImage = mosaiqueEasel.createMosaique(inputImage, artist);
 
-        writeOutput(args[2], outputImage);
+        writeOutput("C:\\Users\\p.faller\\Documents\\GitHub\\iMage\\src\\main\\resources\\com\\image\\mosaique\\output\\Mosaik.png", outputImage);
 
         System.out.println("Finished creating mosaic");
     }

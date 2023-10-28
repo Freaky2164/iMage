@@ -42,7 +42,7 @@ public final class UpperCalculator extends AbstractCalculator
 
 
     @Override
-    protected Iterator<Integer> getIteratorForColumn(int w, int h, int x)
+    public Iterator<Integer> getIteratorForColumn(int w, int h, int x)
     {
         int yMax;
         if (x < w / 2)

@@ -5,13 +5,15 @@
  *
  * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
  */
-package com.image.mosaique.crossed.calculator;
+package com.image.mosaique.crossed;
 
 
 import org.junit.Test;
 
+import com.image.mosaique.crossed.calculator.UpperCalculator;
 
-public class CalculatorTest
+
+public class CrossedCalculatorTest
 {
     @Test
     public void testUpperCalculatorWith9Pixel()
@@ -21,7 +23,7 @@ public class CalculatorTest
         String[] actualsPixels = new String[4];
         for (int x = 0; x < width; x++)
         {
-            var yIter = LeftCalculator.getInstance().getIteratorForColumn(width, height, x);
+            var yIter = UpperCalculator.getInstance().getIteratorForColumn(width, height, x);
             while (yIter.hasNext())
             {
                 int y = yIter.next();
