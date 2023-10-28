@@ -2,7 +2,10 @@ package com.image.mosaique;
 
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.image.app.MosaiqueCreationListener;
 import com.image.mosaique.base.BufferedArtImage;
 import com.image.mosaique.base.IMosaiqueArtist;
 import com.image.mosaique.base.IMosaiqueMaker;
@@ -14,6 +17,8 @@ import com.image.mosaique.base.IMosaiqueMaker;
  */
 public class MosaiqueMaker implements IMosaiqueMaker
 {
+	private List<MosaiqueCreationListener> mosaiqueCreationListeners = new ArrayList<>();
+
     @Override
     public BufferedImage createMosaique(BufferedImage inputImage, IMosaiqueArtist artist)
     {
@@ -35,6 +40,29 @@ public class MosaiqueMaker implements IMosaiqueMaker
                 result.setSubimage(x, y, tile);
             }
         }
-        return result.toBufferedImage();
+        BufferedImage resultImage = result.toBufferedImage();
+        mosaiqueCreated(resultImage);
+        return resultImage;
     }
+
+    
+	public void addMosaiqueCreationListener(MosaiqueCreationListener listener) 
+	{
+		mosaiqueCreationListeners.add(listener);
+	}
+
+	
+	public void removeMosaiqueCreationListener(MosaiqueCreationListener listener) 
+	{
+		mosaiqueCreationListeners.remove(listener);
+	}
+	
+	
+	public void mosaiqueCreated(BufferedImage resultImage)
+	{
+		for (MosaiqueCreationListener mosaiqueCreationListener : mosaiqueCreationListeners) 
+		{
+			mosaiqueCreationListener.mosaiqueCreated(resultImage);
+		}
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * IMosaiqueEasel.java
+ * IMosaiqueMaker.java
  *
  * created at 2023-10-22 by <p.faller@seeburger.de>
  *
@@ -11,7 +11,5 @@ import java.awt.image.BufferedImage;
 
 public interface IMosaiqueMaker
 {
-
     BufferedImage createMosaique(BufferedImage input, IMosaiqueArtist artist);
-
 }

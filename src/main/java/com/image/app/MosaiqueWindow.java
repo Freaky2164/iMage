@@ -7,7 +7,6 @@
  */
 package com.image.app;
 
-
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
@@ -40,7 +39,7 @@ public class MosaiqueWindow extends JFrame
         add(menuPanel, BorderLayout.WEST);
         imagePanel = new ImagePanel();
         add(imagePanel, BorderLayout.CENTER);
-
+        
         this.setVisible(true);
     }
 }
