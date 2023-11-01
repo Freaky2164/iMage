@@ -14,12 +14,11 @@ import java.awt.image.BufferedImage;
 
 public class ImageUtils
 {
-
-    public static BufferedImage scale(BufferedArtImage originalImage, int targetWidth, int targetHeight)
+    public static BufferedImage scale(BufferedImage originalImage, int targetWidth, int targetHeight)
     {
         BufferedImage scaledImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2d = scaledImage.createGraphics();
-        graphics2d.drawImage(originalImage.toBufferedImage(), 0, 0, targetWidth, targetHeight, null);
+        graphics2d.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
         graphics2d.dispose();
         return scaledImage;
     }

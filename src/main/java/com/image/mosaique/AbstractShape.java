@@ -18,13 +18,13 @@ public abstract class AbstractShape implements IMosaiqueShape
     /**
      * Create a new {@link IMosaiqueShape} by image.
      *
-     * @param image the image to use
-     * @param width the width
+     * @param image  the image to use
+     * @param width  the width
      * @param height the height
      */
     protected AbstractShape(BufferedArtImage image, int width, int height)
     {
-        this.image = ImageUtils.scale(Objects.requireNonNull(image), width, height);
+        this.image = ImageUtils.scale(Objects.requireNonNull(image.toBufferedImage()), width, height);
         this.calc = getCalculator();
         this.average = this.calc.averageColor(this.image);
     }

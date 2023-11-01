@@ -43,7 +43,7 @@ public class BufferedArtImage
 
     public BufferedImage toBufferedImage()
     {
-        return this.image;
+        return image;
     }
 
 
