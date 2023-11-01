@@ -9,7 +9,11 @@ package com.image.app;
 
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import com.image.app.repository.FileImage;
 import com.image.app.repository.RepositoryHandler;
@@ -97,8 +101,28 @@ public class MosaiqueController
     }
 
 
-    public void updateImages()
+    public void addImage(File file)
     {
-        mosaiqueWindow.getImagePanel().repaint();
+        RepositoryHandler.addImage(file);
+
+        BufferedImage bufferedImage = null;
+        try
+        {
+            bufferedImage = ImageIO.read(file);
+        }
+        catch (IOException e)
+        {
+            System.err.println("Could not load the images from the repository: " + e.getMessage());
+        }
+        FileImage image = new FileImage(bufferedImage, file.getAbsolutePath(), bufferedImage.getWidth(), bufferedImage.getHeight());
+        mosaiqueWindow.getImagePanel().addImage(image);
+    }
+
+
+    public void deleteImage(FileImage selectedImage)
+    {
+        RepositoryHandler.deleteImage(selectedImage);
+
+        mosaiqueWindow.getImagePanel().deleteImage(selectedImage);
     }
 }

@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.File;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,7 +24,7 @@ import javax.swing.SwingConstants;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import com.image.app.MosaiqueController;
-import com.image.app.repository.RepositoryHandler;
+import com.image.app.repository.FileImage;
 import com.image.app.window.mosaique.MosaiquesWindow;
 
 
@@ -60,9 +61,9 @@ public class MenuPanel extends JPanel
             int returnVal = fileUploader.showOpenDialog(null);
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
-                RepositoryHandler.addImage(fileUploader.getSelectedFile());
+                File selectedFile = fileUploader.getSelectedFile();
+                mosaiqueController.addImage(selectedFile);
             }
-            mosaiqueController.updateImages();
         });
         add(addImageButton, c);
 
@@ -71,8 +72,8 @@ public class MenuPanel extends JPanel
         deleteImageButton.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
         deleteImageButton.addActionListener(e ->
         {
-            RepositoryHandler.deleteImage(mosaiqueController.getSelectedImage());
-            mosaiqueController.updateImages();
+            FileImage selectedImage = mosaiqueController.getSelectedImage();
+            mosaiqueController.deleteImage(selectedImage);
         });
         add(deleteImageButton, c);
 
