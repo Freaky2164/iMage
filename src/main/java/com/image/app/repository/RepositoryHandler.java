@@ -13,46 +13,28 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import com.image.mosaique.base.BufferedArtImage;
-import com.image.mosaique.base.ImageUtils;
+import com.image.mosaic.base.BufferedArtImage;
 
 
 public class RepositoryHandler
 {
-    private static final String IMAGES_PATH = "src\\main\\resources\\com\\image\\mosaique\\repository\\";
-    private static final int IMAGE_SIZE = 200;
+    private static final String IMAGES_PATH = "src\\main\\resources\\com\\image\\mosaic\\repository\\images\\";
+    private static final String TILES_PATH = "src\\main\\resources\\com\\image\\mosaic\\tiles";
+    private static final String MOSAIC_PATH = "src\\main\\resources\\com\\image\\mosaic\\repository\\mosaics\\";
 
-    public static BufferedImage loadInput(String inputPath)
-    {
-        try
-        {
-            if (!inputPath.toLowerCase().endsWith(".png") && !inputPath.toLowerCase().endsWith(".jpeg") && !inputPath.toLowerCase()
-                                                                                                                     .endsWith("jpg"))
-            {
-                System.err.println("Input is neither PNG nor JPG");
-            }
-            File inputFile = new File(inputPath);
-            return ImageIO.read(inputFile);
-        }
-        catch (IOException e)
-        {
-            System.err.println("Could not load the input file: " + e.getMessage());
-            return null;
-        }
-    }
-
-
-    public static List<BufferedArtImage> loadTiles(String tilesPath)
+    public static List<BufferedArtImage> loadTiles()
     {
         List<BufferedArtImage> tiles = new ArrayList<>();
         try
         {
-            File directory = ensureFile(tilesPath, false);
+            File directory = ensureFile(TILES_PATH, false);
             FileFilter isImage = f -> f.getName().toLowerCase().endsWith(".jpeg") || f.getName().toLowerCase().endsWith(".jpg")
                                       || f.getName().toLowerCase().endsWith(".png");
 
@@ -76,18 +58,42 @@ public class RepositoryHandler
     }
 
 
-    public static void writeOutput(String outputPath, BufferedImage outputImage)
+    public static void addMosaic(String mosaicDirName, String mosaicName, BufferedImage mosaic)
     {
-        File output = null;
         try
         {
-            output = ensureFile(outputPath, true);
-            ImageIO.write(outputImage, "png", output);
+            ensureDir(MOSAIC_PATH + mosaicDirName, true);
+            File mosaicFile = ensureFile(MOSAIC_PATH + mosaicDirName + "\\" + mosaicName, true);
+            ImageIO.write(mosaic, "png", mosaicFile);
         }
         catch (IOException e)
         {
-            System.err.println("Could not save image: " + e.getMessage());
+            System.err.println("Could not save mosaic: " + e.getMessage());
         }
+    }
+
+
+    /**
+     * Ensure that a file exists (or create if allowed by parameter).
+     *
+     * @param path   the path to the file
+     * @param create indicates whether creation is allowed
+     * @return the file
+     * @throws IOException if something went wrong
+     */
+    private static File ensureDir(String path, boolean create) throws IOException
+    {
+        File file = new File(path);
+        if (file.exists())
+        {
+            return file;
+        }
+        if (create)
+        {
+            file.mkdir();
+            return file;
+        }
+        throw new IOException("The specified directory does not exist: " + path);
     }
 
 
@@ -115,24 +121,28 @@ public class RepositoryHandler
     }
 
 
-    public static void addImage(File file)
+    public static Path addImage(File file)
     {
-        File targetFile = new File(IMAGES_PATH + file.getName());
+
         try
         {
-            Files.copy(file.toPath(), targetFile.toPath());
+            return Files.copy(file.toPath(), Path.of(IMAGES_PATH, file.getName()));
         }
         catch (IOException e)
         {
             System.err.println("Could not add file to the repository: " + e.getMessage());
         }
+        return null;
     }
 
 
     public static void deleteImage(FileImage fileImage)
     {
-        File file = new File(fileImage.getPath());
-        file.delete();
+        if (fileImage != null)
+        {
+            File file = new File(fileImage.getPath());
+            file.delete();
+        }
     }
 
 
@@ -142,23 +152,56 @@ public class RepositoryHandler
         try
         {
             File directory = new File(IMAGES_PATH);
-            FileFilter isImage = f -> f.getName().toLowerCase().endsWith(".jpeg") || f.getName().toLowerCase().endsWith(".jpg")
-                                      || f.getName().toLowerCase().endsWith(".png");
-
-            for (File file : directory.listFiles(isImage))
+            FileFilter isImage = f -> f.getName().endsWith(".jpeg") || f.getName().endsWith(".jpg") || f.getName().endsWith(".png");
+            File[] images = directory.listFiles(isImage);
+            if (images != null)
             {
-                BufferedImage bufferedImage = ImageIO.read(file);
-                FileImage image = new FileImage(ImageUtils.scale(bufferedImage, IMAGE_SIZE, IMAGE_SIZE), file.getAbsolutePath(),
-                                                bufferedImage.getWidth(),
-                                                bufferedImage.getHeight());
-                imagesList.add(image);
+                for (File image : images)
+                {
+                    BufferedImage bufferedImage = ImageIO.read(image);
+                    FileImage fileImage = new FileImage(bufferedImage, image.getName(),
+                                                    image.getAbsolutePath(), bufferedImage.getWidth(),
+                                                    bufferedImage.getHeight());
+                    imagesList.add(fileImage);
+                }
             }
-
         }
         catch (IOException e)
         {
             System.err.println("Could not load the images from the repository: " + e.getMessage());
         }
         return imagesList;
+    }
+
+
+    public static List<FileImage> getMosaics(FileImage fileImage)
+    {
+        if (fileImage != null)
+        {
+            List<FileImage> imagesList = new ArrayList<>();
+            try
+            {
+                File directory = new File(MOSAIC_PATH + fileImage.getName());
+                FileFilter isImage = f -> f.getName().endsWith(".jpeg") || f.getName().endsWith(".jpg") || f.getName().endsWith(".png");
+                File[] mosaics = directory.listFiles(isImage);
+                if (mosaics != null)
+                {
+                    for (File file : mosaics)
+                    {
+                        BufferedImage bufferedImage = ImageIO.read(file);
+                        FileImage image = new FileImage(bufferedImage, file.getName(),
+                                                        file.getAbsolutePath(), bufferedImage.getWidth(),
+                                                        bufferedImage.getHeight());
+                        imagesList.add(image);
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                System.err.println("Could not load the images from the repository: " + e.getMessage());
+            }
+            return imagesList;
+        }
+        return Collections.emptyList();
     }
 }

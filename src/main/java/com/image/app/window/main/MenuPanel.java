@@ -20,12 +20,11 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
-import com.image.app.MosaiqueController;
+import com.image.app.MosaicController;
 import com.image.app.repository.FileImage;
-import com.image.app.window.mosaique.MosaiquesWindow;
+import com.image.app.window.mosaic.MosaicsWindow;
 
 
 public class MenuPanel extends JPanel
@@ -34,16 +33,18 @@ public class MenuPanel extends JPanel
 
     private JButton addImageButton;
     private JButton deleteImageButton;
-    private JButton showMosaiquesButton;
+    private JButton showMosaicsButton;
     private JTextField imageWidthField;
     private JTextField imageHeightField;
     private JComboBox<String> shapesComboBox;
-    private JButton createMosaiqueButton;
+    private JButton createMosaicButton;
 
-    public MenuPanel(MosaiqueController mosaiqueController)
+    public MenuPanel(MosaicController mosaicController)
     {
         this.setLayout(new GridBagLayout());
         this.setBorder(new FlatLineBorder(getInsets(), Color.BLACK));
+        this.setBackground(Color.GRAY.brighter());
+
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
@@ -51,52 +52,49 @@ public class MenuPanel extends JPanel
         c.weighty = 1;
         c.fill = GridBagConstraints.BOTH;
         c.insets = new Insets(10, 10, 10, 10);
-        c.gridy = 1;
 
         addImageButton = new JButton("Add new Image");
         addImageButton.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
         addImageButton.addActionListener(e ->
         {
             FileImageUploader fileUploader = new FileImageUploader();
-            int returnVal = fileUploader.showOpenDialog(null);
+            int returnVal = fileUploader.showOpenDialog(this.getParent());
             if (returnVal == JFileChooser.APPROVE_OPTION)
             {
                 File selectedFile = fileUploader.getSelectedFile();
-                mosaiqueController.addImage(selectedFile);
+                mosaicController.addImage(selectedFile);
             }
         });
         add(addImageButton, c);
 
-        c.gridy = 2;
+        c.gridy = 1;
         deleteImageButton = new JButton("Delete Image");
         deleteImageButton.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
         deleteImageButton.addActionListener(e ->
         {
-            FileImage selectedImage = mosaiqueController.getSelectedImage();
-            mosaiqueController.deleteImage(selectedImage);
+            FileImage selectedImage = mosaicController.getSelectedImage();
+            mosaicController.deleteImage(selectedImage);
         });
         add(deleteImageButton, c);
 
-        c.gridy = 3;
-        showMosaiquesButton = new JButton("Show Mosaiques");
-        showMosaiquesButton.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-        showMosaiquesButton.addActionListener(e -> new MosaiquesWindow(mosaiqueController.getSelectedImage()));
-        add(showMosaiquesButton, c);
+        c.gridy = 2;
+        showMosaicsButton = new JButton("Show Mosaics");
+        showMosaicsButton.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
+        showMosaicsButton.addActionListener(e -> new MosaicsWindow(mosaicController));
+        add(showMosaicsButton, c);
 
-        c.gridy = 4;
+        c.gridy = 3;
         c.insets = new Insets(20, 10, 20, 10);
         imageWidthField = new JTextField("5");
         imageWidthField.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-        imageWidthField.setHorizontalAlignment(SwingConstants.CENTER);
         add(imageWidthField, c);
 
-        c.gridy = 5;
+        c.gridy = 4;
         imageHeightField = new JTextField("5");
         imageHeightField.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-        imageHeightField.setHorizontalAlignment(SwingConstants.CENTER);
         add(imageHeightField, c);
 
-        c.gridy = 6;
+        c.gridy = 5;
         c.insets = new Insets(10, 10, 10, 10);
         String[] shapeNames = { "Rectangle", "Triangle", "Crossed" };
         shapesComboBox = new JComboBox<>(shapeNames);
@@ -104,39 +102,43 @@ public class MenuPanel extends JPanel
         add(shapesComboBox, c);
 
         c.gridy = 7;
-        createMosaiqueButton = new JButton("Create Mosaique");
-        createMosaiqueButton.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-        createMosaiqueButton.addActionListener(e ->
+        createMosaicButton = new JButton("Create Mosaic");
+        createMosaicButton.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
+        createMosaicButton.addActionListener(e ->
         {
             int widthInput = Integer.parseInt(imageWidthField.getText());
             int heightInput = Integer.parseInt(imageHeightField.getText());
             if (validateInput(widthInput, heightInput))
             {
-                mosaiqueController.createMosaique(widthInput, heightInput, shapesComboBox.getSelectedItem().toString());
+                mosaicController.createMosaic(mosaicController.getSelectedImage(), widthInput, heightInput, shapesComboBox.getSelectedItem().toString());
             }
         });
-        add(createMosaiqueButton, c);
-    }
-
-
-    public void activateMosaiqueCreation()
-    {
-
+        add(createMosaicButton, c);
     }
 
 
     private boolean validateInput(int widthInput, int heightInput)
     {
-        if (!(widthInput > 0 && widthInput < 10))
+        boolean isValid = true;
+        if (!(widthInput > 0 && widthInput <= 10))
         {
-            imageWidthField.setForeground(Color.red);
-            return false;
+            imageWidthField.setForeground(Color.RED);
+            isValid = false;
         }
-        if (!(heightInput > 0 && heightInput < 10))
+        else
         {
-            imageHeightField.setForeground(Color.red);
-            return false;
+            imageWidthField.setForeground(Color.BLACK);
         }
-        return true;
+
+        if (!(heightInput > 0 && heightInput <= 10))
+        {
+            imageHeightField.setForeground(Color.RED);
+            isValid = false;
+        }
+        else
+        {
+            imageHeightField.setForeground(Color.BLACK);
+        }
+        return isValid;
     }
 }

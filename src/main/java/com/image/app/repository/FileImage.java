@@ -8,30 +8,38 @@
 package com.image.app.repository;
 
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 
 public class FileImage
 {
-    private Image image;
+    private BufferedImage image;
+    private String name;
     private String path;
     private int width;
     private int height;
     private List<String> createdMosaiques;
 
-    public FileImage(Image image, String path, int width, int height)
+    public FileImage(BufferedImage image, String name, String path, int width, int height)
     {
         this.image = image;
+        this.name = name;
         this.path = path;
         this.width = width;
         this.height = height;
     }
 
 
-    public Image getImage()
+    public BufferedImage getImage()
     {
         return image;
+    }
+
+
+    public String getName()
+    {
+        return name;
     }
 
 

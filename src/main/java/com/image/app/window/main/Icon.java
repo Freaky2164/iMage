@@ -16,14 +16,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
+import com.image.app.MosaicController;
 import com.image.app.repository.FileImage;
+import com.image.app.window.mosaic.ImageIconViewer;
 
 
 public class Icon extends JLabel
 {
     private static final long serialVersionUID = 1L;
 
-    public Icon(ImagesPanel imagesPanel, FileImage fileImage, ImageIcon imageIcon)
+    public Icon(ImageIconViewer parent, FileImage fileImage, ImageIcon imageIcon, MosaicController mosaicController)
     {
         super(imageIcon);
         setBorder(new FlatLineBorder(getInsets(), Color.LIGHT_GRAY, 3f, 0));
@@ -32,7 +34,7 @@ public class Icon extends JLabel
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                select(imagesPanel, fileImage);
+                select(parent, fileImage, mosaicController);
             }
         });
     }
@@ -44,10 +46,14 @@ public class Icon extends JLabel
     }
 
 
-    public void select(ImagesPanel imagesPanel, FileImage fileImage)
+    public void select(ImageIconViewer parent, FileImage fileImage, MosaicController mosaicController)
     {
-        imagesPanel.deselectImage();
-        imagesPanel.setSelectedImage(fileImage);
+        parent.deselectImage();
+        parent.setSelectedImage(fileImage);
         setBorder(new FlatLineBorder(getInsets(), Color.YELLOW, 3f, 0));
+        if (mosaicController != null)
+        {
+            mosaicController.hasSelectedImage(fileImage);
+        }
     }
 }

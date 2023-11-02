@@ -18,25 +18,33 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
+import com.image.app.MosaicController;
 import com.image.app.repository.FileImage;
+import com.image.app.window.mosaic.ImageIconViewer;
+import com.image.mosaic.base.ImageUtils;
 
 
-public class ImagesPanel extends JPanel
+public class ImagesPanel extends JPanel implements ImageIconViewer
 {
     private static final long serialVersionUID = 1L;
-    private Map<FileImage, Icon> images = new HashMap<>();
+    private Map<FileImage, Icon> imagesMap = new HashMap<>();
     private FileImage selectedImage;
+    private MosaicController mosaicController;
 
-    public ImagesPanel(List<FileImage> images)
+    public ImagesPanel(List<FileImage> images, MosaicController mosaicController)
     {
+        this.mosaicController = mosaicController;
         this.setBorder(new FlatLineBorder(getInsets(), Color.BLACK));
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
+        this.setBackground(Color.GRAY);
+
         for (FileImage image : images)
         {
-            ImageIcon imageIcon = new ImageIcon(image.getImage());
-            Icon icon = new Icon(this, image, imageIcon);
+            ImageIcon imageIcon = new ImageIcon(ImageUtils.scale(image.getImage(), MosaicController.IMAGE_SIZE,
+                                                                 MosaicController.IMAGE_SIZE));
+            Icon icon = new Icon(this, image, imageIcon, mosaicController);
             this.add(icon);
-            this.images.put(image, icon);
+            this.imagesMap.put(image, icon);
         }
     }
 
@@ -55,7 +63,7 @@ public class ImagesPanel extends JPanel
 
     public void deselectImage()
     {
-        Icon icon = images.get(selectedImage);
+        Icon icon = imagesMap.get(selectedImage);
         if (icon != null)
         {
             icon.deselect();
@@ -65,18 +73,20 @@ public class ImagesPanel extends JPanel
 
     public void addImage(FileImage image)
     {
-        ImageIcon imageIcon = new ImageIcon(image.getImage());
-        Icon icon = new Icon(this, image, imageIcon);
+        ImageIcon imageIcon = new ImageIcon(ImageUtils.scale(image.getImage(), MosaicController.IMAGE_SIZE, MosaicController.IMAGE_SIZE));
+        Icon icon = new Icon(this, image, imageIcon, mosaicController);
         this.add(icon);
-        images.put(image, icon);
+        imagesMap.put(image, icon);
+        revalidate();
         repaint();
     }
 
 
     public void deleteImage(FileImage image)
     {
-        Icon icon = images.remove(image);
+        Icon icon = imagesMap.remove(image);
         this.remove(icon);
+        revalidate();
         repaint();
     }
 }
