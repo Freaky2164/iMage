@@ -14,29 +14,27 @@ import com.image.mosaic.crossed.CrossedRectangleArtist;
 /**
  * Helper class for the {@link CrossedRectangleArtist} and {@link AbstractShape CrossedShapes}.
  *
- * @author Dominik Fuchss
- *
  */
-public final class UpperCalculator extends AbstractCalculator
+public final class CrossedLowerCalculator extends AbstractCalculator
 {
-    private static UpperCalculator instance;
+    private static CrossedLowerCalculator instance;
 
     /**
      * Get the one and only instance of the calculator.
      *
      * @return the instance
      */
-    public static UpperCalculator getInstance()
+    public static CrossedLowerCalculator getInstance()
     {
         if (instance == null)
         {
-            instance = new UpperCalculator();
+            instance = new CrossedLowerCalculator();
         }
         return instance;
     }
 
 
-    private UpperCalculator()
+    private CrossedLowerCalculator()
     {
     }
 
@@ -44,16 +42,16 @@ public final class UpperCalculator extends AbstractCalculator
     @Override
     public Iterator<Integer> getIteratorForColumn(int w, int h, int x)
     {
-        int yMax;
+        int yMin;
         if (x < w / 2)
         {
-            yMax = (int)Math.floor(Math.max(x + 1, 0));
+            yMin = (int)Math.ceil(Math.max((h - x - 1), 0));
         }
         else
         {
-            yMax = (int)Math.floor(Math.max((h - x), 0));
+            yMin = (int)Math.ceil(Math.max(x, 0));
         }
-        return IntStream.range(0, yMax).iterator();
+        return IntStream.range(yMin, h).iterator();
     }
 
 

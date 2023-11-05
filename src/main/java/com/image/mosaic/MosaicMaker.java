@@ -9,6 +9,7 @@ import com.image.app.listener.MosaicCreationListener;
 import com.image.mosaic.base.BufferedArtImage;
 import com.image.mosaic.base.IMosaicArtist;
 import com.image.mosaic.base.IMosaicMaker;
+import com.image.mosaic.rectangle.RectangleArtist;
 
 
 /**
@@ -22,6 +23,8 @@ public class MosaicMaker implements IMosaicMaker
     @Override
     public BufferedImage createMosaic(BufferedImage inputImage, IMosaicArtist artist)
     {
+        IMosaicArtist backupArtist = new RectangleArtist(artist.getTiles(), artist.getTileWidth(), artist.getTileHeight());
+
         int tileWidth = artist.getTileWidth();
         int tileHeight = artist.getTileHeight();
 
@@ -36,7 +39,9 @@ public class MosaicMaker implements IMosaicMaker
                 int height = y + tileHeight < input.getHeight() ? tileHeight : input.getHeight() - y;
 
                 BufferedArtImage imageRegion = input.getSubimage(x, y, width, height);
-                BufferedArtImage tile = artist.getTileForRegion(imageRegion);
+                BufferedArtImage tile = width == height
+                    ? artist.getTileForRegion(imageRegion)
+                    : backupArtist.getTileForRegion(imageRegion);
                 result.setSubimage(x, y, tile);
             }
         }

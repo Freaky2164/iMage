@@ -5,7 +5,7 @@ import com.image.mosaic.AbstractCalculator;
 import com.image.mosaic.AbstractShape;
 import com.image.mosaic.base.BufferedArtImage;
 import com.image.mosaic.base.IMosaicShape;
-import com.image.mosaic.crossed.calculator.RightCalculator;
+import com.image.mosaic.crossed.calculator.CrossedRightCalculator;
 
 
 public class RightCrossedShape extends AbstractShape
@@ -26,6 +26,6 @@ public class RightCrossedShape extends AbstractShape
     @Override
     protected AbstractCalculator getCalculator()
     {
-        return RightCalculator.getInstance();
+        return CrossedRightCalculator.getInstance();
     }
 }

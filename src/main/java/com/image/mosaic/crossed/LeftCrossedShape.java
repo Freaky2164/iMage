@@ -5,7 +5,7 @@ import com.image.mosaic.AbstractCalculator;
 import com.image.mosaic.AbstractShape;
 import com.image.mosaic.base.BufferedArtImage;
 import com.image.mosaic.base.IMosaicShape;
-import com.image.mosaic.crossed.calculator.LeftCalculator;
+import com.image.mosaic.crossed.calculator.CrossedLeftCalculator;
 
 
 public class LeftCrossedShape extends AbstractShape
@@ -26,6 +26,6 @@ public class LeftCrossedShape extends AbstractShape
     @Override
     protected AbstractCalculator getCalculator()
     {
-        return LeftCalculator.getInstance();
+        return CrossedLeftCalculator.getInstance();
     }
 }

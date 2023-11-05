@@ -14,35 +14,33 @@ import com.image.mosaic.crossed.CrossedRectangleArtist;
 /**
  * Helper class for the {@link CrossedRectangleArtist} and {@link AbstractShape CrossedShapes}.
  *
- * @author Dominik Fuchss
- *
  */
-public final class LeftCalculator extends AbstractCalculator
+public final class CrossedLeftCalculator extends AbstractCalculator
 {
-    private static LeftCalculator instance;
+    private static CrossedLeftCalculator instance;
 
     /**
      * Get the one and only instance of the calculator.
      *
      * @return the instance
      */
-    public static LeftCalculator getInstance()
+    public static CrossedLeftCalculator getInstance()
     {
         if (instance == null)
         {
-            instance = new LeftCalculator();
+            instance = new CrossedLeftCalculator();
         }
         return instance;
     }
 
 
-    private LeftCalculator()
+    private CrossedLeftCalculator()
     {
     }
 
 
     @Override
-    protected Iterator<Integer> getIteratorForColumn(int w, int h, int x)
+    public Iterator<Integer> getIteratorForColumn(int w, int h, int x)
     {
         int yMin = (int)Math.floor(Math.max(x, 0));
         int yMax = (int)Math.ceil(Math.max((h - x), 0));

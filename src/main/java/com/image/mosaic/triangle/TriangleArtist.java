@@ -17,34 +17,42 @@ import com.image.mosaic.base.IMosaicArtist;
  */
 public class TriangleArtist extends AbstractArtist
 {
-
+    private Collection<BufferedArtImage> tiles;
     private List<AbstractShape> upper;
     private List<AbstractShape> lower;
 
     /**
      * Create an artist who works with TriangleShapes
      *
-     * @param images     the images for the tiles
+     * @param tiles     the images for the tiles
      * @param tileWidth  the desired width of the tiles
      * @param tileHeight the desired height of the tiles
      * @throws IllegalArgumentException if tileWidth or tileHeight are 0, or images is empty.
      */
-    public TriangleArtist(Collection<BufferedArtImage> images, int tileWidth, int tileHeight)
+    public TriangleArtist(Collection<BufferedArtImage> tiles, int tileWidth, int tileHeight)
     {
         super(tileWidth, tileHeight);
-        if (images.isEmpty())
+        if (tiles.isEmpty())
         {
             throw new IllegalArgumentException("no tiles provided");
         }
 
+        this.tiles = tiles;
         this.upper = new ArrayList<>();
         this.lower = new ArrayList<>();
 
-        for (var image : images)
+        for (var image : tiles)
         {
             upper.add(new UpperTriangleShape(image, tileWidth, tileHeight));
             lower.add(new LowerTriangleShape(image, tileWidth, tileHeight));
         }
+    }
+
+
+    @Override
+    public Collection<BufferedArtImage> getTiles()
+    {
+        return tiles;
     }
 
 
