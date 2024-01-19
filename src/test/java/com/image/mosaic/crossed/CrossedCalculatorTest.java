@@ -15,10 +15,10 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.image.mosaic.crossed.calculator.CrossedLeftCalculator;
-import com.image.mosaic.crossed.calculator.CrossedLowerCalculator;
-import com.image.mosaic.crossed.calculator.CrossedRightCalculator;
-import com.image.mosaic.crossed.calculator.CrossedUpperCalculator;
+import com.image.implementation.mosaic.crossed.calculator.CrossedLeftCalculator;
+import com.image.implementation.mosaic.crossed.calculator.CrossedLowerCalculator;
+import com.image.implementation.mosaic.crossed.calculator.CrossedRightCalculator;
+import com.image.implementation.mosaic.crossed.calculator.CrossedUpperCalculator;
 
 
 public class CrossedCalculatorTest

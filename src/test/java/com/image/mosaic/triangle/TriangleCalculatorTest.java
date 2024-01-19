@@ -15,6 +15,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.image.implementation.mosaic.triangle.LowerTriangleCalculator;
+import com.image.implementation.mosaic.triangle.UpperTriangleCalculator;
+
 
 public class TriangleCalculatorTest
 {
@@ -25,7 +28,7 @@ public class TriangleCalculatorTest
         int height = 1;
 
         String[] expectedUpperPixels = new String[] { "0,0" };
-        String[] expectedLowerPixels = new String[] { };
+        String[] expectedLowerPixels = new String[] {};
 
         List<String> actualUpperPixels = new ArrayList<>();
         List<String> actualLowerPixels = new ArrayList<>();

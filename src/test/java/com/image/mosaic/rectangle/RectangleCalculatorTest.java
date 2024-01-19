@@ -15,6 +15,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.image.implementation.mosaic.rectangle.RectangleCalculator;
+
 
 public class RectangleCalculatorTest
 {
