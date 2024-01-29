@@ -1,5 +1,5 @@
 /*
- * MosaicWindow.java
+ * ViewMosaicWindow.java
  *
  * created at 2023-10-30 by <p.faller@seeburger.de>
  *
@@ -19,15 +19,16 @@ import javax.swing.WindowConstants;
 import com.image.implementation.mosaic.base.ImageUtils;
 
 
-public class MosaicWindow extends JFrame
+public class ViewMosaicWindow extends JFrame
 {
     private static final long serialVersionUID = 1L;
 
-    public MosaicWindow(BufferedImage mosaic)
+    public ViewMosaicWindow(BufferedImage mosaic)
     {
         this.setSize(mosaic.getWidth(), mosaic.getHeight());
         setMaximumSize(new Dimension(1920, 1080));
         setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("iMage - Mosaic");
 

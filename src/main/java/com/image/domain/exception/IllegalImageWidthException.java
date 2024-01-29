@@ -1,5 +1,5 @@
 /*
- * ImageDimensionException.java
+ * IllegalImageWidthException.java
  *
  * created at 2024-01-15 by <p.faller@seeburger.de>
  *

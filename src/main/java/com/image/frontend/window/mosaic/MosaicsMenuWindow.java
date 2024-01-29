@@ -1,5 +1,5 @@
 /*
- * MosaicsWindow.java
+ * MosaicsMenuWindow.java
  *
  * created at 2023-10-30 by <p.faller@seeburger.de>
  *
@@ -33,20 +33,20 @@ import com.image.domain.service.MosaicController;
 import com.image.implementation.mosaic.base.ImageUtils;
 
 
-public class MosaicsWindow extends JFrame implements MosaicIconViewer
+public class MosaicsMenuWindow extends JFrame implements MosaicIconViewer
 {
     private static final long serialVersionUID = 1L;
     private Map<Mosaic, MosaicsIcon> mosaicsMap = new HashMap<>();
     private Mosaic selectedMosaic;
     private JPanel mainPanel;
 
-    public MosaicsWindow(MosaicController mosaicController)
+    public MosaicsMenuWindow(MosaicController mosaicController)
     {
         this.setSize(800, 500);
         setLocationRelativeTo(getParent());
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("iMage - Mosaics");
+        setTitle("iMage - Mosaics Menu");
         setLayout(new BorderLayout());
 
         mainPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
