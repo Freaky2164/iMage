@@ -25,8 +25,16 @@ public final class MosaicMaker implements MosaicMakerService
     @Override
     public BufferedImage createMosaic(BufferedImage inputImage, IMosaicArtist artist)
     {
-        BufferedImage resultImage = new BufferedImage(inputImage.getWidth(), inputImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+        if (inputImage == null)
+        {
+            throw new IllegalArgumentException("No image provided");
+        }
+        if (artist == null)
+        {
+            throw new IllegalArgumentException("No artist provide");
+        }
 
+        BufferedImage resultImage = new BufferedImage(inputImage.getWidth(), inputImage.getHeight(), BufferedImage.TYPE_INT_RGB);
         int numberOfThreads = inputImage.getWidth() / WIDTH_FOR_ONE_THREAD;
         List<Thread> threads = new ArrayList<>();
         for (int i = 0; i <= numberOfThreads; i++)
@@ -45,6 +53,7 @@ public final class MosaicMaker implements MosaicMakerService
             }
             catch (InterruptedException e)
             {
+                System.err.println("Interrupted: " + e.getMessage());
                 Thread.currentThread().interrupt();
             }
         });
@@ -54,8 +63,7 @@ public final class MosaicMaker implements MosaicMakerService
     }
 
 
-    private void setTileToImageRegion(int threadStartingWidth, BufferedImage inputImage, IMosaicArtist artist,
-                                                BufferedImage resultImage)
+    private void setTileToImageRegion(int threadStartingWidth, BufferedImage inputImage, IMosaicArtist artist, BufferedImage resultImage)
     {
         IMosaicArtist backupArtist = new RectangleArtist(artist.getTiles(), artist.getTileWidth(), artist.getTileHeight());
 

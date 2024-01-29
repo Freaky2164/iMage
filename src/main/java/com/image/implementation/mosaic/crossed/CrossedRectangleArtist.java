@@ -33,6 +33,10 @@ public class CrossedRectangleArtist extends AbstractArtist
     public CrossedRectangleArtist(Collection<BufferedImage> tiles, int tileWidth, int tileHeight)
     {
         super(tileWidth, tileHeight);
+        if (tileWidth != tileHeight || (tileWidth < 3 && tileHeight < 3))
+        {
+            throw new IllegalArgumentException("Width and height must be the same and greater than 2.");
+        }
         if (tiles.isEmpty())
         {
             throw new IllegalArgumentException("no tiles provided");

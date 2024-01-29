@@ -31,9 +31,13 @@ public class TriangleArtist extends AbstractArtist
     public TriangleArtist(Collection<BufferedImage> tiles, int tileWidth, int tileHeight)
     {
         super(tileWidth, tileHeight);
+        if (tileWidth != tileHeight || (tileWidth < 2 && tileHeight < 2))
+        {
+            throw new IllegalArgumentException("Width and height must be the same and greater than 1");
+        }
         if (tiles.isEmpty())
         {
-            throw new IllegalArgumentException("no tiles provided");
+            throw new IllegalArgumentException("No tiles provided");
         }
 
         this.tiles = tiles;

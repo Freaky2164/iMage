@@ -35,7 +35,7 @@ public class RectangleArtist extends AbstractArtist
 
         if (tiles.isEmpty())
         {
-            throw new IllegalArgumentException("No tiles provided");
+            throw new IllegalArgumentException("No tiles provided.");
         }
 
         this.tiles = tiles;

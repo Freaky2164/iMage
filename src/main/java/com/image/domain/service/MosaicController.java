@@ -20,11 +20,12 @@ import javax.swing.JOptionPane;
 
 import com.image.domain.entities.ImageAggregate;
 import com.image.domain.entities.Mosaic;
+import com.image.domain.exception.MosaicCreationException;
 import com.image.domain.repository.ImageRepository;
 import com.image.domain.value_objects.Tile;
 import com.image.frontend.listener.MosaicCreationListener;
 import com.image.frontend.window.main.AppFrame;
-import com.image.frontend.window.mosaic.MosaicWindow;
+import com.image.frontend.window.mosaic.ViewMosaicWindow;
 import com.image.implementation.mosaic.AbstractArtist;
 import com.image.implementation.mosaic.MosaicMaker;
 import com.image.implementation.mosaic.crossed.CrossedRectangleArtist;
@@ -102,41 +103,59 @@ public class MosaicController implements MosaicCreationListener
     {
         if (imageAggregate != null)
         {
-            int tileWidth = widthInput;
-            int tileHeight = heightInput;
-            BufferedImage inputImage = imageAggregate.getImage();
-
-            if (tileWidth <= 0 || tileHeight <= 0 || tileWidth > inputImage.getWidth() || tileHeight > inputImage.getHeight())
+            try
             {
-                System.err.println("tileWidth/tileHeight is invalid: " + tileWidth + "," + tileHeight);
-            }
+                int tileWidth = widthInput;
+                int tileHeight = heightInput;
+                BufferedImage inputImage = imageAggregate.getImage();
 
-            AbstractArtist artist = null;
-            if (shape.equals("Rectangle"))
-            {
-                artist = new RectangleArtist(tiles, tileWidth, tileHeight);
-            }
-            else if (shape.equals("Triangle"))
-            {
-                artist = new TriangleArtist(tiles, tileWidth, tileHeight);
-            }
-            else
-            {
-                artist = new CrossedRectangleArtist(tiles, tileWidth, tileHeight);
-            }
-            BufferedImage outputImage = mosaicMaker.createMosaic(inputImage, artist);
+                if (tileWidth > inputImage.getWidth() || tileHeight > inputImage.getHeight())
+                {
+                    System.err.println("tileWidth/tileHeight is invalid: " + tileWidth + "," + tileHeight);
+                    JOptionPane.showMessageDialog(appFrame, "tileWidth/tileHeight is invalid: " + tileWidth + "," + tileHeight,
+                                                  "Mosaic creation error", JOptionPane.ERROR_MESSAGE);
+                }
 
-            Mosaic mosaic = new Mosaic(UUID.randomUUID(), imageAggregate.getImageId(), outputImage,
-                                       new Tile(shape, widthInput, heightInput), imageAggregate.getName());
-            imageRepository.save(mosaic);
-            getSelectedImage().addMosaic(mosaic);
+                AbstractArtist artist = createArtist(shape, tileWidth, tileHeight);
+                BufferedImage outputImage = mosaicMaker.createMosaic(inputImage, artist);
 
-            appFrame.getMetadataPanel().showMetadata(imageAggregate);
+                Mosaic mosaic = new Mosaic(UUID.randomUUID(), imageAggregate.getImageId(), outputImage,
+                                           new Tile(shape, widthInput, heightInput), imageAggregate.getName());
+                imageRepository.save(mosaic);
+                getSelectedImage().addMosaic(mosaic);
+
+                appFrame.getMetadataPanel().showMetadata(imageAggregate);
+            }
+            catch (Exception e)
+            {
+                JOptionPane.showMessageDialog(appFrame, "Creation of the mosaic failed because of: \n\r" + e.getMessage(),
+                                              "Mosaic creation error", JOptionPane.ERROR_MESSAGE);
+                throw new MosaicCreationException("Could not create mosaic: " + e.getMessage());
+            }
         }
         else
         {
             JOptionPane.showMessageDialog(appFrame, "No image selected");
         }
+    }
+
+
+    private AbstractArtist createArtist(String shape, int tileWidth, int tileHeight)
+    {
+        AbstractArtist artist = null;
+        if (shape.equals("Rectangle"))
+        {
+            artist = new RectangleArtist(tiles, tileWidth, tileHeight);
+        }
+        else if (shape.equals("Triangle"))
+        {
+            artist = new TriangleArtist(tiles, tileWidth, tileHeight);
+        }
+        else
+        {
+            artist = new CrossedRectangleArtist(tiles, tileWidth, tileHeight);
+        }
+        return artist;
     }
 
 
@@ -168,6 +187,6 @@ public class MosaicController implements MosaicCreationListener
     @Override
     public void mosaicCreated(BufferedImage resultImage)
     {
-        new MosaicWindow(resultImage);
+        new ViewMosaicWindow(resultImage);
     }
 }

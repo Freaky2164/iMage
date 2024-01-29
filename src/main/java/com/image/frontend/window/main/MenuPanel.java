@@ -24,7 +24,7 @@ import javax.swing.JTextField;
 import com.formdev.flatlaf.ui.FlatLineBorder;
 import com.image.domain.entities.ImageAggregate;
 import com.image.domain.service.MosaicController;
-import com.image.frontend.window.mosaic.MosaicsWindow;
+import com.image.frontend.window.mosaic.MosaicsMenuWindow;
 
 
 public class MenuPanel extends JPanel
@@ -80,7 +80,7 @@ public class MenuPanel extends JPanel
         c.gridy = 2;
         showMosaicsButton = new JButton("Show Mosaics");
         showMosaicsButton.setFont(new Font(Font.DIALOG, Font.BOLD, 20));
-        showMosaicsButton.addActionListener(e -> new MosaicsWindow(mosaicController));
+        showMosaicsButton.addActionListener(e -> new MosaicsMenuWindow(mosaicController));
         add(showMosaicsButton, c);
 
         c.gridy = 3;
