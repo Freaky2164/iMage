@@ -30,8 +30,15 @@ import com.image.domain.value_objects.Tile;
 
 public class FileSystemImageRepository implements ImageRepository
 {
-    private static final String IMAGES_PATH = "src\\main\\resources\\com\\image\\mosaic\\repository\\images\\";
-    private static final String MOSAIC_PATH = "src\\main\\resources\\com\\image\\mosaic\\repository\\mosaics\\";
+    protected String imagePath;
+    protected String mosaicPath;
+
+    public FileSystemImageRepository()
+    {
+        this.imagePath = "src\\main\\resources\\com\\image\\mosaic\\repository\\images\\";
+        this.mosaicPath = "src\\main\\resources\\com\\image\\mosaic\\repository\\mosaics\\";
+    }
+
 
     @Override
     public Optional<ImageAggregate> findById(UUID imageId)
@@ -39,7 +46,7 @@ public class FileSystemImageRepository implements ImageRepository
         ImageAggregate imageAggregate = null;
         try
         {
-            File directory = new File(IMAGES_PATH + imageId.toString());
+            File directory = new File(imagePath + imageId.toString());
             FileFilter isImage = f -> f.getName().endsWith(".jpeg") || f.getName().endsWith(".jpg") || f.getName().endsWith(".png");
             File[] listFiles = directory.listFiles(isImage);
             if (listFiles.length == 1)
@@ -64,7 +71,7 @@ public class FileSystemImageRepository implements ImageRepository
         List<ImageAggregate> imagesList = new ArrayList<>();
         try
         {
-            File directory = new File(IMAGES_PATH);
+            File directory = new File(imagePath);
             File[] images = directory.listFiles();
             if (images != null)
             {
@@ -76,7 +83,8 @@ public class FileSystemImageRepository implements ImageRepository
                     {
                         File imageFile = listFiles[0];
                         BufferedImage bufferedImage = ImageIO.read(imageFile);
-                        ImageAggregate imageAggregate = new ImageAggregate(UUID.fromString(imageDir.getName()), bufferedImage, imageFile.getName(),
+                        ImageAggregate imageAggregate = new ImageAggregate(UUID.fromString(imageDir.getName()), bufferedImage, imageFile
+                                                                                                                                        .getName(),
                                                                            imageFile.getAbsolutePath());
                         findAll(UUID.fromString(imageDir.getName())).forEach(imageAggregate::addMosaic);
                         imagesList.add(imageAggregate);
@@ -97,7 +105,7 @@ public class FileSystemImageRepository implements ImageRepository
     {
         try
         {
-            File imageDir = ensureDir(IMAGES_PATH + image.getImageId(), true);
+            File imageDir = ensureDir(imagePath + image.getImageId(), true);
             Files.copy(Path.of(image.getPath()), Path.of(imageDir.getPath(), image.getName()));
         }
         catch (IOException e)
@@ -111,7 +119,7 @@ public class FileSystemImageRepository implements ImageRepository
     @Override
     public void delete(UUID imageId)
     {
-        File imageDir = new File(IMAGES_PATH + imageId.toString());
+        File imageDir = new File(imagePath + imageId.toString());
         for (File image : imageDir.listFiles())
         {
             image.delete();
@@ -128,13 +136,14 @@ public class FileSystemImageRepository implements ImageRepository
             List<Mosaic> mosaicList = new ArrayList<>();
             try
             {
-                File directory = new File(MOSAIC_PATH + imageId.toString());
+                File directory = new File(mosaicPath + imageId.toString());
                 File[] mosaicDirs = directory.listFiles();
                 if (mosaicDirs != null)
                 {
                     for (File mosaics : mosaicDirs)
                     {
-                        FileFilter isImage = f -> f.getName().endsWith(".jpeg") || f.getName().endsWith(".jpg") || f.getName().endsWith(".png");
+                        FileFilter isImage = f -> f.getName().endsWith(".jpeg") || f.getName().endsWith(".jpg") || f.getName().endsWith(
+                                                                                                                                        ".png");
                         File[] mosaicsDir = mosaics.listFiles(isImage);
                         if (mosaicsDir.length == 1)
                         {
@@ -169,7 +178,7 @@ public class FileSystemImageRepository implements ImageRepository
     {
         try
         {
-            File imageDir = ensureDir(MOSAIC_PATH + mosaic.getImageId(), true);
+            File imageDir = ensureDir(mosaicPath + mosaic.getImageId(), true);
             File mosaicDir = ensureDir(imageDir.getPath() + "//" + mosaic.getMosaicId(), true);
             File mosaicFile = ensureFile(mosaicDir.getPath() + "//" + mosaic.getTile() + "_" + mosaic.getName(), true);
             ImageIO.write(mosaic.getImage(), "png", mosaicFile);
@@ -186,7 +195,7 @@ public class FileSystemImageRepository implements ImageRepository
     @Override
     public void delete(UUID imageId, UUID mosaicId)
     {
-        File mosaicDir = new File(MOSAIC_PATH + imageId.toString() + "//" + mosaicId.toString());
+        File mosaicDir = new File(mosaicPath + imageId.toString() + "//" + mosaicId.toString());
         for (File mosaic : mosaicDir.listFiles())
         {
             mosaic.delete();

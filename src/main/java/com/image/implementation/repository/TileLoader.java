@@ -22,32 +22,43 @@ import com.image.domain.service.TileLoaderService;
 
 public class TileLoader implements TileLoaderService
 {
-    private static final String TILES_PATH = "src\\main\\resources\\com\\image\\mosaic\\tiles";
-    private static final int NUMBER_OF_THREADS = 4;
-    private static final int NUMBER_OF_FILES_PER_THREAD = 250;
+    protected String tilesPath;
+    protected int numberOfThreads;
+
+    public TileLoader()
+    {
+        this.tilesPath = "src\\main\\resources\\com\\image\\mosaic\\tiles";
+        this.numberOfThreads = 4;
+    }
+
 
     public List<BufferedImage> loadTiles()
     {
         List<BufferedImage> tiles = new ArrayList<>();
         try
         {
-            File directory = ensureFile(TILES_PATH, false);
+            File directory = ensureFile(tilesPath, false);
             FileFilter isImage = f -> f.getName().toLowerCase().endsWith(".jpeg") || f.getName().toLowerCase().endsWith(".jpg")
                                       || f.getName().toLowerCase().endsWith(".png");
             List<Thread> threads = new ArrayList<>();
             File[] files = directory.listFiles(isImage);
-            for (int i = 0; i < NUMBER_OF_THREADS; i++)
+            for (int i = 0; i < numberOfThreads; i++)
             {
                 int threadNumber = i;
                 Thread thread = new Thread(() ->
                 {
                     try
                     {
-                        int maxFileNumber = (NUMBER_OF_FILES_PER_THREAD * threadNumber) + NUMBER_OF_FILES_PER_THREAD;
-                        for (int j = NUMBER_OF_FILES_PER_THREAD * threadNumber; j < maxFileNumber; j++)
+                        int numberOfFilesPerThread = files.length / numberOfThreads;
+                        int tileStartNumber = numberOfFilesPerThread * threadNumber;
+                        int tileEndNumber = threadNumber != 4 ? tileStartNumber + numberOfFilesPerThread : files.length;
+                        for (int j = tileStartNumber; j < tileEndNumber; j++)
                         {
-                            BufferedImage tileImage = ImageIO.read(files[j]);
-                            tiles.add(tileImage);
+                            if (files[j] != null)
+                            {
+                                BufferedImage tileImage = ImageIO.read(files[j]);
+                                tiles.add(tileImage);
+                            }
                         }
                     }
                     catch (IOException e)
@@ -66,7 +77,8 @@ public class TileLoader implements TileLoaderService
                 }
                 catch (InterruptedException e)
                 {
-                    e.printStackTrace();
+                    System.err.println("Interrupted: " + e.getMessage());
+                    Thread.currentThread().interrupt();
                 }
             });
         }
