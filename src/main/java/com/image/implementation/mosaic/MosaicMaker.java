@@ -6,16 +6,19 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import com.image.domain.entities.ImageAggregate;
+import com.image.domain.entities.Mosaic;
 import com.image.domain.service.MosaicMakerService;
+import com.image.domain.value_objects.Tile;
 import com.image.frontend.listener.MosaicCreationListener;
 import com.image.implementation.mosaic.base.IMosaicArtist;
 import com.image.implementation.mosaic.rectangle.RectangleArtist;
 
 
 /**
- * This class defines a {@link MosaicMakerService} which operates on {@link FileInformation
- * BufferedArtImages}.
+ * This class defines a {@link MosaicMakerService} which operates on {@link FileInformation BufferedArtImages}.
  */
 public final class MosaicMaker implements MosaicMakerService
 {
@@ -23,8 +26,9 @@ public final class MosaicMaker implements MosaicMakerService
     private List<MosaicCreationListener> mosaicCreationListeners = new ArrayList<>();
 
     @Override
-    public BufferedImage createMosaic(BufferedImage inputImage, IMosaicArtist artist)
+    public void createMosaic(ImageAggregate imageAggregate, IMosaicArtist artist)
     {
+        BufferedImage inputImage = imageAggregate.getImage();
         if (inputImage == null)
         {
             throw new IllegalArgumentException("No image provided");
@@ -58,8 +62,9 @@ public final class MosaicMaker implements MosaicMakerService
             }
         });
 
-        mosaicCreated(resultImage);
-        return resultImage;
+        Mosaic mosaic = new Mosaic(UUID.randomUUID(), imageAggregate.getImageId(), resultImage,
+                                   new Tile(artist.getShape(), artist.getTileWidth(), artist.getTileHeight()), imageAggregate.getName());
+        mosaicCreated(mosaic);
     }
 
 
@@ -113,7 +118,7 @@ public final class MosaicMaker implements MosaicMakerService
     }
 
 
-    public void mosaicCreated(BufferedImage resultImage)
+    public void mosaicCreated(Mosaic resultImage)
     {
         for (MosaicCreationListener mosaicCreationListener : mosaicCreationListeners)
         {

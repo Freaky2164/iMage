@@ -9,6 +9,7 @@ import java.util.List;
 import com.image.implementation.mosaic.AbstractArtist;
 import com.image.implementation.mosaic.AbstractShape;
 import com.image.implementation.mosaic.base.IMosaicArtist;
+import com.image.implementation.mosaic.base.TileShape;
 
 
 /**
@@ -70,5 +71,12 @@ public class TriangleArtist extends AbstractArtist
 
         upperImage.drawMe(target);
         lowerImage.drawMe(target);
+    }
+
+
+    @Override
+    public TileShape getShape()
+    {
+        return TileShape.TRIANGLE;
     }
 }

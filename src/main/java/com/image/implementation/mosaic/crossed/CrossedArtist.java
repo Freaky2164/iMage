@@ -8,13 +8,14 @@ import java.util.List;
 
 import com.image.implementation.mosaic.AbstractArtist;
 import com.image.implementation.mosaic.AbstractShape;
+import com.image.implementation.mosaic.base.TileShape;
 import com.image.implementation.mosaic.crossed.calculator.CrossedLeftCalculator;
 import com.image.implementation.mosaic.crossed.calculator.CrossedLowerCalculator;
 import com.image.implementation.mosaic.crossed.calculator.CrossedRightCalculator;
 import com.image.implementation.mosaic.crossed.calculator.CrossedUpperCalculator;
 
 
-public class CrossedRectangleArtist extends AbstractArtist
+public class CrossedArtist extends AbstractArtist
 {
     private Collection<BufferedImage> tiles;
     private List<AbstractShape> upper;
@@ -30,7 +31,7 @@ public class CrossedRectangleArtist extends AbstractArtist
      * @param tileHeight the desired height of the tiles
      * @throws IllegalArgumentException if tileWidth or tileHeight are 0 or images is empty.
      */
-    public CrossedRectangleArtist(Collection<BufferedImage> tiles, int tileWidth, int tileHeight)
+    public CrossedArtist(Collection<BufferedImage> tiles, int tileWidth, int tileHeight)
     {
         super(tileWidth, tileHeight);
         if (tileWidth != tileHeight || (tileWidth < 3 && tileHeight < 3))
@@ -82,5 +83,12 @@ public class CrossedRectangleArtist extends AbstractArtist
         lowerImage.drawMe(target);
         leftImage.drawMe(target);
         rightImage.drawMe(target);
+    }
+
+
+    @Override
+    public TileShape getShape()
+    {
+        return TileShape.CROSSED;
     }
 }

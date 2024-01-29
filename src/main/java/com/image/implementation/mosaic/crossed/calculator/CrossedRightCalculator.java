@@ -8,11 +8,11 @@ import java.util.stream.IntStream;
 
 import com.image.implementation.mosaic.AbstractCalculator;
 import com.image.implementation.mosaic.AbstractShape;
-import com.image.implementation.mosaic.crossed.CrossedRectangleArtist;
+import com.image.implementation.mosaic.crossed.CrossedArtist;
 
 
 /**
- * Helper class for the {@link CrossedRectangleArtist} and {@link AbstractShape CrossedShapes}.
+ * Helper class for the {@link CrossedArtist} and {@link AbstractShape CrossedShapes}.
  *
  */
 public final class CrossedRightCalculator extends AbstractCalculator

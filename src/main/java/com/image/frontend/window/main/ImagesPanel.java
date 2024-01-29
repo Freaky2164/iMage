@@ -13,6 +13,7 @@ import java.awt.FlowLayout;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -26,8 +27,8 @@ import com.image.implementation.mosaic.base.ImageUtils;
 public class ImagesPanel extends JPanel implements ImageIconViewer
 {
     private static final long serialVersionUID = 1L;
-    private Map<ImageAggregate, ImagesIcon> imagesMap = new HashMap<>();
-    private ImageAggregate selectedImage;
+    private Map<UUID, ImagesIcon> imagesMap = new HashMap<>();
+    private UUID selectedImageId;
     private MosaicController mosaicController;
 
     public ImagesPanel(List<ImageAggregate> images, MosaicController mosaicController)
@@ -40,28 +41,28 @@ public class ImagesPanel extends JPanel implements ImageIconViewer
         for (ImageAggregate imageAggregate : images)
         {
             ImageIcon imageIcon = new ImageIcon(ImageUtils.scale(imageAggregate.getImage(), 400, 400));
-            ImagesIcon icon = new ImagesIcon(this, imageAggregate, imageIcon, mosaicController);
+            ImagesIcon icon = new ImagesIcon(this, imageAggregate.getImageId(), imageIcon, mosaicController);
             this.add(icon);
-            imagesMap.put(imageAggregate, icon);
+            imagesMap.put(imageAggregate.getImageId(), icon);
         }
     }
 
 
-    public void setSelectedImage(ImageAggregate imageAggregate)
+    public void setSelectedImage(UUID imageId)
     {
-        selectedImage = imageAggregate;
+        this.selectedImageId = imageId;
     }
 
 
-    public ImageAggregate getSelectedImage()
+    public UUID getSelectedImageId()
     {
-        return selectedImage;
+        return selectedImageId;
     }
 
 
     public void deselectImage()
     {
-        ImagesIcon icon = imagesMap.get(selectedImage);
+        ImagesIcon icon = imagesMap.get(selectedImageId);
         if (icon != null)
         {
             icon.deselect();
@@ -72,17 +73,17 @@ public class ImagesPanel extends JPanel implements ImageIconViewer
     public void addImage(ImageAggregate imageAggregate)
     {
         ImageIcon imageIcon = new ImageIcon(ImageUtils.scale(imageAggregate.getImage(), 250, 250));
-        ImagesIcon icon = new ImagesIcon(this, imageAggregate, imageIcon, mosaicController);
+        ImagesIcon icon = new ImagesIcon(this, imageAggregate.getImageId(), imageIcon, mosaicController);
         this.add(icon);
-        imagesMap.put(imageAggregate, icon);
+        imagesMap.put(imageAggregate.getImageId(), icon);
         revalidate();
         repaint();
     }
 
 
-    public void deleteImage(ImageAggregate imageAggregate)
+    public void deleteImage(UUID imageId)
     {
-        ImagesIcon icon = imagesMap.remove(imageAggregate);
+        ImagesIcon icon = imagesMap.remove(imageId);
         this.remove(icon);
         revalidate();
         repaint();

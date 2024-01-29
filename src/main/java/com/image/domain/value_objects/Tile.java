@@ -10,20 +10,19 @@ package com.image.domain.value_objects;
 
 import java.util.Objects;
 
-import org.apache.commons.lang3.Validate;
-
 import com.image.domain.exception.IllegalTileException;
+import com.image.implementation.mosaic.base.TileShape;
 
 
 public final class Tile
 {
-    public final String shape;
+    public final TileShape shape;
     public final int width;
     public final int height;
 
-    public Tile(final String shape, final int width, final int height)
+    public Tile(final TileShape shape, final int width, final int height)
     {
-        Validate.notBlank(shape);
+        Objects.requireNonNull(shape);
         if (width != height && (width <= 0 || height <= 0))
         {
             throw new IllegalTileException("Tiles may only be of equal width and height with values greater than zero");
@@ -34,7 +33,7 @@ public final class Tile
     }
 
 
-    public String getShape()
+    public TileShape getShape()
     {
         return shape;
     }

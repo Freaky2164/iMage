@@ -10,6 +10,7 @@ import com.image.implementation.mosaic.AbstractArtist;
 import com.image.implementation.mosaic.AbstractShape;
 import com.image.implementation.mosaic.base.IMosaicArtist;
 import com.image.implementation.mosaic.base.IMosaicShape;
+import com.image.implementation.mosaic.base.TileShape;
 
 
 /**
@@ -60,5 +61,12 @@ public class RectangleArtist extends AbstractArtist
         int average = RectangleCalculator.getInstance().averageColor(region);
         IMosaicShape tile = findNearest(average, shapes);
         tile.drawMe(target);
+    }
+
+
+    @Override
+    public TileShape getShape()
+    {
+        return TileShape.RECTANGLE;
     }
 }

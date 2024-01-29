@@ -19,7 +19,7 @@ import com.image.domain.repository.ImageRepository;
 import com.image.domain.service.TileLoaderService;
 import com.image.implementation.mosaic.MosaicMaker;
 import com.image.implementation.mosaic.base.IMosaicArtist;
-import com.image.implementation.mosaic.crossed.CrossedRectangleArtist;
+import com.image.implementation.mosaic.crossed.CrossedArtist;
 import com.image.implementation.mosaic.rectangle.RectangleArtist;
 import com.image.implementation.mosaic.triangle.TriangleArtist;
 import com.image.repository.TestFileSystemImageRepository;
@@ -41,8 +41,8 @@ public class MosaicMakerTest
     {
         MosaicMaker mosaicMaker = new MosaicMaker();
         ImageRepository imageRepository = new TestFileSystemImageRepository();
-        ImageAggregate inputImage = imageRepository.findAll().get(0);
-        mosaicMaker.createMosaic(inputImage.getImage(), null);
+        ImageAggregate imageAggregate = imageRepository.findAll().get(0);
+        mosaicMaker.createMosaic(imageAggregate, null);
     }
 
 
@@ -63,14 +63,16 @@ public class MosaicMakerTest
         MosaicMaker mosaicMaker = new MosaicMaker();
         ImageRepository imageRepository = new TestFileSystemImageRepository();
         TileLoaderService tileLoaderService = new TestTileLoader();
-        ImageAggregate inputImage = imageRepository.findAll().get(0);
+        ImageAggregate imageAggregate = imageRepository.findAll().get(0);
         List<BufferedImage> tiles = tileLoaderService.loadTiles();
         IMosaicArtist mosaicArtist = new RectangleArtist(tiles, 5, 5);
-        BufferedImage mosaic = mosaicMaker.createMosaic(inputImage.getImage(), mosaicArtist);
-
-        Assert.assertNotNull(mosaic);
-        Assert.assertEquals(inputImage.getImage().getWidth(), mosaic.getWidth());
-        Assert.assertEquals(inputImage.getImage().getHeight(), mosaic.getHeight());
+        mosaicMaker.createMosaic(imageAggregate, mosaicArtist);
+        mosaicMaker.addMosaicCreationListener(mosaic ->
+        {
+            Assert.assertNotNull(mosaic);
+            Assert.assertEquals(imageAggregate.getImage().getWidth(), mosaic.getImage().getWidth());
+            Assert.assertEquals(imageAggregate.getImage().getHeight(), mosaic.getImage().getWidth());
+        });
     }
 
 
@@ -80,14 +82,16 @@ public class MosaicMakerTest
         MosaicMaker mosaicMaker = new MosaicMaker();
         ImageRepository imageRepository = new TestFileSystemImageRepository();
         TileLoaderService tileLoaderService = new TestTileLoader();
-        ImageAggregate inputImage = imageRepository.findAll().get(0);
+        ImageAggregate imageAggregate = imageRepository.findAll().get(0);
         List<BufferedImage> tiles = tileLoaderService.loadTiles();
         IMosaicArtist mosaicArtist = new TriangleArtist(tiles, 5, 5);
-        BufferedImage mosaic = mosaicMaker.createMosaic(inputImage.getImage(), mosaicArtist);
-
-        Assert.assertNotNull(mosaic);
-        Assert.assertEquals(inputImage.getImage().getWidth(), mosaic.getWidth());
-        Assert.assertEquals(inputImage.getImage().getHeight(), mosaic.getHeight());
+        mosaicMaker.createMosaic(imageAggregate, mosaicArtist);
+        mosaicMaker.addMosaicCreationListener(mosaic ->
+        {
+            Assert.assertNotNull(mosaic);
+            Assert.assertEquals(imageAggregate.getImage().getWidth(), mosaic.getImage().getWidth());
+            Assert.assertEquals(imageAggregate.getImage().getHeight(), mosaic.getImage().getWidth());
+        });
     }
 
 
@@ -97,13 +101,15 @@ public class MosaicMakerTest
         MosaicMaker mosaicMaker = new MosaicMaker();
         ImageRepository imageRepository = new TestFileSystemImageRepository();
         TileLoaderService tileLoaderService = new TestTileLoader();
-        ImageAggregate inputImage = imageRepository.findAll().get(0);
+        ImageAggregate imageAggregate = imageRepository.findAll().get(0);
         List<BufferedImage> tiles = tileLoaderService.loadTiles();
-        IMosaicArtist mosaicArtist = new CrossedRectangleArtist(tiles, 5, 5);
-        BufferedImage mosaic = mosaicMaker.createMosaic(inputImage.getImage(), mosaicArtist);
-
-        Assert.assertNotNull(mosaic);
-        Assert.assertEquals(inputImage.getImage().getWidth(), mosaic.getWidth());
-        Assert.assertEquals(inputImage.getImage().getHeight(), mosaic.getHeight());
+        IMosaicArtist mosaicArtist = new CrossedArtist(tiles, 5, 5);
+        mosaicMaker.createMosaic(imageAggregate, mosaicArtist);
+        mosaicMaker.addMosaicCreationListener(mosaic ->
+        {
+            Assert.assertNotNull(mosaic);
+            Assert.assertEquals(imageAggregate.getImage().getWidth(), mosaic.getImage().getWidth());
+            Assert.assertEquals(imageAggregate.getImage().getHeight(), mosaic.getImage().getWidth());
+        });
     }
 }

@@ -8,7 +8,7 @@
 package com.image.frontend.window.main;
 
 
-import com.image.domain.entities.ImageAggregate;
+import java.util.UUID;
 
 
 public interface ImageIconViewer
@@ -16,5 +16,5 @@ public interface ImageIconViewer
     void deselectImage();
 
 
-    void setSelectedImage(ImageAggregate imageAggregate);
+    void setSelectedImage(UUID imageId);
 }

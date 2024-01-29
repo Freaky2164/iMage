@@ -8,12 +8,11 @@
 package com.image.domain.service;
 
 
-import java.awt.image.BufferedImage;
-
+import com.image.domain.entities.ImageAggregate;
 import com.image.implementation.mosaic.base.IMosaicArtist;
 
 
 public interface MosaicMakerService
 {
-    BufferedImage createMosaic(BufferedImage input, IMosaicArtist artist);
+    void createMosaic(ImageAggregate inputImage, IMosaicArtist artist);
 }

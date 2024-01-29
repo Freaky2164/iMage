@@ -24,4 +24,6 @@ public interface IMosaicArtist
 
 
     BufferedImage getTileForRegion(BufferedImage region);
+
+    TileShape getShape();
 }

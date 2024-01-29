@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -22,13 +23,12 @@ import com.image.domain.entities.ImageAggregate;
 import com.image.domain.entities.Mosaic;
 import com.image.domain.exception.MosaicCreationException;
 import com.image.domain.repository.ImageRepository;
-import com.image.domain.value_objects.Tile;
 import com.image.frontend.listener.MosaicCreationListener;
 import com.image.frontend.window.main.AppFrame;
 import com.image.frontend.window.mosaic.ViewMosaicWindow;
 import com.image.implementation.mosaic.AbstractArtist;
 import com.image.implementation.mosaic.MosaicMaker;
-import com.image.implementation.mosaic.crossed.CrossedRectangleArtist;
+import com.image.implementation.mosaic.crossed.CrossedArtist;
 import com.image.implementation.mosaic.rectangle.RectangleArtist;
 import com.image.implementation.mosaic.triangle.TriangleArtist;
 import com.image.implementation.repository.FileSystemImageRepository;
@@ -63,13 +63,13 @@ public class MosaicController implements MosaicCreationListener
 
     public ImageAggregate getSelectedImage()
     {
-        return appFrame.getImagePanel().getSelectedImage();
+        return imageRepository.findById(appFrame.getImagePanel().getSelectedImageId()).orElseThrow();
     }
 
 
-    public void hasSelectedImage(ImageAggregate imageAggregate)
+    public void hasSelectedImage(UUID imageId)
     {
-        appFrame.getMetadataPanel().showMetadata(imageAggregate);
+        imageRepository.findById(imageId).ifPresent(imageAggregate -> appFrame.getMetadataPanel().showMetadata(imageAggregate));
     }
 
 
@@ -94,7 +94,7 @@ public class MosaicController implements MosaicCreationListener
         selectedImage.getMosaics().forEach(mosaic -> imageRepository.delete(selectedImage.getImageId(), mosaic.getMosaicId()));
         imageRepository.delete(selectedImage.getImageId());
 
-        appFrame.getImagePanel().deleteImage(selectedImage);
+        appFrame.getImagePanel().deleteImage(selectedImage.getImageId());
         appFrame.getMetadataPanel().resetView();
     }
 
@@ -117,14 +117,7 @@ public class MosaicController implements MosaicCreationListener
                 }
 
                 AbstractArtist artist = createArtist(shape, tileWidth, tileHeight);
-                BufferedImage outputImage = mosaicMaker.createMosaic(inputImage, artist);
-
-                Mosaic mosaic = new Mosaic(UUID.randomUUID(), imageAggregate.getImageId(), outputImage,
-                                           new Tile(shape, widthInput, heightInput), imageAggregate.getName());
-                imageRepository.save(mosaic);
-                getSelectedImage().addMosaic(mosaic);
-
-                appFrame.getMetadataPanel().showMetadata(imageAggregate);
+                Executors.newSingleThreadExecutor().execute(() -> mosaicMaker.createMosaic(imageAggregate, artist));
             }
             catch (Exception e)
             {
@@ -153,7 +146,7 @@ public class MosaicController implements MosaicCreationListener
         }
         else
         {
-            artist = new CrossedRectangleArtist(tiles, tileWidth, tileHeight);
+            artist = new CrossedArtist(tiles, tileWidth, tileHeight);
         }
         return artist;
     }
@@ -185,8 +178,10 @@ public class MosaicController implements MosaicCreationListener
 
 
     @Override
-    public void mosaicCreated(BufferedImage resultImage)
+    public void mosaicCreated(Mosaic mosaic)
     {
-        new ViewMosaicWindow(resultImage);
+        imageRepository.save(mosaic);
+        imageRepository.findById(mosaic.getImageId()).ifPresent(imageAggregate -> appFrame.getMetadataPanel().showMetadata(imageAggregate));
+        new ViewMosaicWindow(mosaic.getImage());
     }
 }

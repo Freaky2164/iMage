@@ -1,10 +1,10 @@
 package com.image.frontend.listener;
 
 
-import java.awt.image.BufferedImage;
+import com.image.domain.entities.Mosaic;
 
 
 public interface MosaicCreationListener
 {
-    public void mosaicCreated(BufferedImage resultImage);
+    void mosaicCreated(Mosaic mosaic);
 }

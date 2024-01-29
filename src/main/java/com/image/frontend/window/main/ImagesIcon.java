@@ -11,12 +11,12 @@ package com.image.frontend.window.main;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.UUID;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import com.formdev.flatlaf.ui.FlatLineBorder;
-import com.image.domain.entities.ImageAggregate;
 import com.image.domain.service.MosaicController;
 
 
@@ -24,7 +24,7 @@ public class ImagesIcon extends JLabel
 {
     private static final long serialVersionUID = 1L;
 
-    public ImagesIcon(ImageIconViewer parent, ImageAggregate imageAggregate, ImageIcon imageIcon, MosaicController mosaicController)
+    public ImagesIcon(ImageIconViewer parent, UUID imageId, ImageIcon imageIcon, MosaicController mosaicController)
     {
         setIcon(imageIcon);
         setBorder(new FlatLineBorder(getInsets(), Color.LIGHT_GRAY, 3f, 0));
@@ -33,7 +33,7 @@ public class ImagesIcon extends JLabel
             @Override
             public void mouseClicked(MouseEvent e)
             {
-                select(parent, imageAggregate, mosaicController);
+                select(parent, imageId, mosaicController);
             }
         });
     }
@@ -45,14 +45,14 @@ public class ImagesIcon extends JLabel
     }
 
 
-    public void select(ImageIconViewer parent, ImageAggregate imageAggregate, MosaicController mosaicController)
+    public void select(ImageIconViewer parent, UUID imageId, MosaicController mosaicController)
     {
         parent.deselectImage();
-        parent.setSelectedImage(imageAggregate);
+        parent.setSelectedImage(imageId);
         setBorder(new FlatLineBorder(getInsets(), Color.YELLOW, 3f, 0));
         if (mosaicController != null)
         {
-            mosaicController.hasSelectedImage(imageAggregate);
+            mosaicController.hasSelectedImage(imageId);
         }
     }
 }

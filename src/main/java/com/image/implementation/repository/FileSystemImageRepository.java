@@ -26,6 +26,7 @@ import com.image.domain.entities.ImageAggregate;
 import com.image.domain.entities.Mosaic;
 import com.image.domain.repository.ImageRepository;
 import com.image.domain.value_objects.Tile;
+import com.image.implementation.mosaic.base.TileShape;
 
 
 public class FileSystemImageRepository implements ImageRepository
@@ -152,7 +153,7 @@ public class FileSystemImageRepository implements ImageRepository
                             String tileShape = mosaicInformation[0];
                             int tileWidth = Integer.parseInt(mosaicInformation[1].substring(0, 1));
                             int tileHeight = Integer.parseInt(mosaicInformation[1].substring(2, 3));
-                            Tile tile = new Tile(tileShape, tileWidth, tileHeight);
+                            Tile tile = new Tile(getTileShapeFrom(tileShape), tileWidth, tileHeight);
                             UUID mosaicId = UUID.fromString(mosaics.getName());
 
                             BufferedImage bufferedImage = ImageIO.read(mosaicFile);
@@ -251,5 +252,23 @@ public class FileSystemImageRepository implements ImageRepository
             return file;
         }
         throw new IOException("The specified file does not exist: " + path);
+    }
+
+
+    private TileShape getTileShapeFrom(String shape)
+    {
+        if ("Rectangle".equals(shape))
+        {
+            return TileShape.RECTANGLE;
+        }
+        if ("Triangle".equals(shape))
+        {
+            return TileShape.TRIANGLE;
+        }
+        if ("Crossed".contentEquals(shape))
+        {
+            return TileShape.CROSSED;
+        }
+        return null;
     }
 }
