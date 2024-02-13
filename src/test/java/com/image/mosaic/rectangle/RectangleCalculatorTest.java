@@ -8,12 +8,11 @@
 package com.image.mosaic.rectangle;
 
 
-import static org.junit.Assert.assertArrayEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.image.implementation.mosaic.rectangle.RectangleCalculator;
 
@@ -39,7 +38,7 @@ public class RectangleCalculatorTest
             }
         }
 
-        assertArrayEquals(expectedPixels, actualPixels.toArray());
+        Assertions.assertArrayEquals(expectedPixels, actualPixels.toArray());
     }
 
 
@@ -62,7 +61,7 @@ public class RectangleCalculatorTest
             }
         }
 
-        assertArrayEquals(expectedPixels, actualPixels.toArray());
+        Assertions.assertArrayEquals(expectedPixels, actualPixels.toArray());
     }
 
 
@@ -85,7 +84,7 @@ public class RectangleCalculatorTest
             }
         }
 
-        assertArrayEquals(expectedPixels, actualPixels.toArray());
+        Assertions.assertArrayEquals(expectedPixels, actualPixels.toArray());
     }
 
 
@@ -109,6 +108,6 @@ public class RectangleCalculatorTest
             }
         }
 
-        assertArrayEquals(expectedPixels, actualPixels.toArray());
+        Assertions.assertArrayEquals(expectedPixels, actualPixels.toArray());
     }
 }

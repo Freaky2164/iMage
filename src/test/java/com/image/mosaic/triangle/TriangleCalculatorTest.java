@@ -8,12 +8,11 @@
 package com.image.mosaic.triangle;
 
 
-import static org.junit.Assert.assertArrayEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.image.implementation.mosaic.triangle.LowerTriangleCalculator;
 import com.image.implementation.mosaic.triangle.UpperTriangleCalculator;
@@ -51,8 +50,8 @@ public class TriangleCalculatorTest
             }
         }
 
-        assertArrayEquals(expectedUpperPixels, actualUpperPixels.toArray());
-        assertArrayEquals(expectedLowerPixels, actualLowerPixels.toArray());
+        Assertions.assertArrayEquals(expectedUpperPixels, actualUpperPixels.toArray());
+        Assertions.assertArrayEquals(expectedLowerPixels, actualLowerPixels.toArray());
     }
 
 
@@ -85,8 +84,8 @@ public class TriangleCalculatorTest
             }
         }
 
-        assertArrayEquals(expectedUpperPixels, actualUpperPixels.toArray());
-        assertArrayEquals(expectedLowerPixels, actualLowerPixels.toArray());
+        Assertions.assertArrayEquals(expectedUpperPixels, actualUpperPixels.toArray());
+        Assertions.assertArrayEquals(expectedLowerPixels, actualLowerPixels.toArray());
     }
 
 
@@ -119,7 +118,7 @@ public class TriangleCalculatorTest
             }
         }
 
-        assertArrayEquals(expectedUpperPixels, actualUpperPixels.toArray());
-        assertArrayEquals(expectedLowerPixels, actualLowerPixels.toArray());
+        Assertions.assertArrayEquals(expectedUpperPixels, actualUpperPixels.toArray());
+        Assertions.assertArrayEquals(expectedLowerPixels, actualLowerPixels.toArray());
     }
 }

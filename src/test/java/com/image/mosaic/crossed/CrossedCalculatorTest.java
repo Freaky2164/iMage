@@ -8,12 +8,11 @@
 package com.image.mosaic.crossed;
 
 
-import static org.junit.Assert.assertArrayEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import com.image.implementation.mosaic.crossed.calculator.CrossedLeftCalculator;
 import com.image.implementation.mosaic.crossed.calculator.CrossedLowerCalculator;
@@ -68,10 +67,10 @@ public class CrossedCalculatorTest
             }
         }
 
-        assertArrayEquals(expectedRightPixels, actualRightPixels.toArray());
-        assertArrayEquals(expectedLeftPixels, actualLeftPixels.toArray());
-        assertArrayEquals(expectedUpperPixels, actualUpperPixels.toArray());
-        assertArrayEquals(expectedLowerPixels, actualLowerPixels.toArray());
+        Assertions.assertArrayEquals(expectedRightPixels, actualRightPixels.toArray());
+        Assertions.assertArrayEquals(expectedLeftPixels, actualLeftPixels.toArray());
+        Assertions.assertArrayEquals(expectedUpperPixels, actualUpperPixels.toArray());
+        Assertions.assertArrayEquals(expectedLowerPixels, actualLowerPixels.toArray());
     }
 
 
@@ -120,9 +119,9 @@ public class CrossedCalculatorTest
             }
         }
 
-        assertArrayEquals(expectedRightPixels, actualRightPixels.toArray());
-        assertArrayEquals(expectedLeftPixels, actualLeftPixels.toArray());
-        assertArrayEquals(expectedUpperPixels, actualUpperPixels.toArray());
-        assertArrayEquals(expectedLowerPixels, actualLowerPixels.toArray());
+        Assertions.assertArrayEquals(expectedRightPixels, actualRightPixels.toArray());
+        Assertions.assertArrayEquals(expectedLeftPixels, actualLeftPixels.toArray());
+        Assertions.assertArrayEquals(expectedUpperPixels, actualUpperPixels.toArray());
+        Assertions.assertArrayEquals(expectedLowerPixels, actualLowerPixels.toArray());
     }
 }
