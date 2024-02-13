@@ -5,7 +5,7 @@
  *
  * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
  */
-package com.image.frontend;
+package com.image;
 
 
 import com.formdev.flatlaf.FlatLightLaf;
