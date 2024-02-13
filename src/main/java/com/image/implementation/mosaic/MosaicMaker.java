@@ -28,8 +28,7 @@ public final class MosaicMaker implements MosaicMakerService
     @Override
     public void createMosaic(ImageAggregate imageAggregate, IMosaicArtist artist)
     {
-        BufferedImage inputImage = imageAggregate.getImage();
-        if (inputImage == null)
+        if (imageAggregate == null)
         {
             throw new IllegalArgumentException("No image provided");
         }
@@ -38,6 +37,7 @@ public final class MosaicMaker implements MosaicMakerService
             throw new IllegalArgumentException("No artist provide");
         }
 
+        BufferedImage inputImage = imageAggregate.getImage();
         BufferedImage resultImage = new BufferedImage(inputImage.getWidth(), inputImage.getHeight(), BufferedImage.TYPE_INT_RGB);
         int numberOfThreads = inputImage.getWidth() / WIDTH_FOR_ONE_THREAD;
         List<Thread> threads = new ArrayList<>();
