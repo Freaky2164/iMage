@@ -1,10 +1,3 @@
-/*
- * MosaicsMenuWindow.java
- *
- * created at 2023-10-30 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.frontend.window.mosaic;
 
 
@@ -33,6 +26,9 @@ import com.image.domain.service.MosaicController;
 import com.image.implementation.mosaic.base.ImageUtils;
 
 
+/**
+ * Menu for displaying mosaics in the UI
+ */
 public class MosaicsMenuWindow extends JFrame implements MosaicIconViewer
 {
     private static final long serialVersionUID = 1L;

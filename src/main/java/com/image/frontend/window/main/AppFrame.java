@@ -1,10 +1,3 @@
-/*
- * AppFrame.java
- *
- * created at 2023-10-27 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.frontend.window.main;
 
 
@@ -22,6 +15,9 @@ import com.image.domain.entities.ImageAggregate;
 import com.image.domain.service.MosaicController;
 
 
+/**
+ * Main window frame of the application
+ */
 public class AppFrame extends JFrame
 {
     private static final long serialVersionUID = 1L;

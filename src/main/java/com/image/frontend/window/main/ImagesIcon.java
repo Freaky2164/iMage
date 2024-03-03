@@ -1,10 +1,3 @@
-/*
- * ImagesIcon.java
- *
- * created at 2023-11-01 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.frontend.window.main;
 
 
@@ -20,6 +13,9 @@ import com.formdev.flatlaf.ui.FlatLineBorder;
 import com.image.domain.service.MosaicController;
 
 
+/**
+ * This class is used to display images in the UI which can be selected for mosaic creation
+ */
 public class ImagesIcon extends JLabel
 {
     private static final long serialVersionUID = 1L;

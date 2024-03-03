@@ -15,9 +15,8 @@ import com.image.implementation.mosaic.base.TileShape;
 
 /**
  * This class represents an {@link IMosaicArtist} who uses rectangles as tiles.
- *
  */
-public class RectangleArtist extends AbstractArtist
+public final class RectangleArtist extends AbstractArtist
 {
     private Collection<BufferedImage> tiles;
     private List<AbstractShape> shapes;

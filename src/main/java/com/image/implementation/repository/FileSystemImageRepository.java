@@ -1,10 +1,3 @@
-/*
- * FileSystemImageRepository.java
- *
- * created at 2024-01-16 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.implementation.repository;
 
 
@@ -29,6 +22,9 @@ import com.image.domain.value_objects.Tile;
 import com.image.implementation.mosaic.base.TileShape;
 
 
+/**
+ * This class represents the implementation of {@link ImageRepository} for loading, deleting and saving images and mosaics
+ */
 public class FileSystemImageRepository implements ImageRepository
 {
     protected String imagePath;
@@ -157,8 +153,7 @@ public class FileSystemImageRepository implements ImageRepository
                             UUID mosaicId = UUID.fromString(mosaics.getName());
 
                             BufferedImage bufferedImage = ImageIO.read(mosaicFile);
-                            Mosaic mosaic = new Mosaic(mosaicId, imageId, bufferedImage, tile, mosaicFile.getName());
-                            mosaic.moveTo(mosaicFile.getPath());
+                            Mosaic mosaic = new Mosaic(mosaicId, imageId, bufferedImage, tile, mosaicFile.getName(), mosaicFile.getPath());
                             mosaicList.add(mosaic);
                         }
                     }

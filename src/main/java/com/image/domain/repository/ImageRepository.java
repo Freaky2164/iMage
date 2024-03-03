@@ -1,10 +1,3 @@
-/*
- * ImageRepository.java
- *
- * created at 2024-01-16 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.domain.repository;
 
 
@@ -16,6 +9,9 @@ import com.image.domain.entities.ImageAggregate;
 import com.image.domain.entities.Mosaic;
 
 
+/**
+ * Interface of all functions needed for the repository of the application
+ */
 public interface ImageRepository
 {
     Optional<ImageAggregate> findById(UUID imageId);

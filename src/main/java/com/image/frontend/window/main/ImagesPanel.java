@@ -1,10 +1,3 @@
-/*
- * ImagesPanel.java
- *
- * created at 2023-10-27 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.frontend.window.main;
 
 
@@ -24,6 +17,9 @@ import com.image.domain.service.MosaicController;
 import com.image.implementation.mosaic.base.ImageUtils;
 
 
+/**
+ * Panel for displaying images on the UI
+ */
 public class ImagesPanel extends JPanel implements ImageIconViewer
 {
     private static final long serialVersionUID = 1L;

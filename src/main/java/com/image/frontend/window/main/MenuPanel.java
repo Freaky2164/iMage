@@ -1,10 +1,3 @@
-/*
- * MenuPanel.java
- *
- * created at 2023-10-27 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.frontend.window.main;
 
 
@@ -27,6 +20,9 @@ import com.image.domain.service.MosaicController;
 import com.image.frontend.window.mosaic.MosaicsMenuWindow;
 
 
+/**
+ * Panel for specifing the details of the mosaic
+ */
 public class MenuPanel extends JPanel
 {
     private static final long serialVersionUID = 1L;

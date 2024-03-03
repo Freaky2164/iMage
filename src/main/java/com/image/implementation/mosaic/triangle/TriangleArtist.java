@@ -15,7 +15,7 @@ import com.image.implementation.mosaic.base.TileShape;
 /**
  * This class represents an {@link IMosaicArtist} who uses triangles as tiles.
  */
-public class TriangleArtist extends AbstractArtist
+public final class TriangleArtist extends AbstractArtist
 {
     private Collection<BufferedImage> tiles;
     private List<AbstractShape> upper;

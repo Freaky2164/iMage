@@ -1,10 +1,3 @@
-/*
- * Tile.java
- *
- * created at 2024-01-16 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.domain.value_objects;
 
 
@@ -14,6 +7,9 @@ import com.image.domain.exception.IllegalTileException;
 import com.image.implementation.mosaic.base.TileShape;
 
 
+/**
+ * Value object for information about a tile
+ */
 public final class Tile
 {
     public final TileShape shape;

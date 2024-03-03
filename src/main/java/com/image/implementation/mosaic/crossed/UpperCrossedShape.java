@@ -9,7 +9,10 @@ import com.image.implementation.mosaic.base.IMosaicShape;
 import com.image.implementation.mosaic.crossed.calculator.CrossedUpperCalculator;
 
 
-public class UpperCrossedShape extends AbstractShape
+/**
+ * This class represents a upper cross as {@link IMosaicShape}
+ */
+public final class UpperCrossedShape extends AbstractShape
 {
     /**
      * Create a new {@link IMosaicShape} by image.

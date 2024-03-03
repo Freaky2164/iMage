@@ -1,10 +1,3 @@
-/*
- * MetadataPanel.java
- *
- * created at 2023-10-29 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.frontend.window.main;
 
 
@@ -25,6 +18,9 @@ import com.formdev.flatlaf.ui.FlatLineBorder;
 import com.image.domain.entities.ImageAggregate;
 
 
+/**
+ * Panel displaying specific information about a selected image
+ */
 public class MetadataPanel extends JPanel
 {
     private static final long serialVersionUID = 1L;

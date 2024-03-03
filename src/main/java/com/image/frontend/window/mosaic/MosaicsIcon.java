@@ -1,10 +1,3 @@
-/*
- * MosaicIcon.java
- *
- * created at 2024-01-17 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.frontend.window.mosaic;
 
 
@@ -19,6 +12,9 @@ import com.formdev.flatlaf.ui.FlatLineBorder;
 import com.image.domain.entities.Mosaic;
 
 
+/**
+ * This class is used to display mosaic images in the UI 
+ */
 public class MosaicsIcon extends JLabel
 {
     private static final long serialVersionUID = 1L;

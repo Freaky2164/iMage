@@ -1,16 +1,11 @@
-/*
- * IMosaicShape.java
- *
- * created at 2023-10-22 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.implementation.mosaic.base;
 
 
 import java.awt.image.BufferedImage;
 
-
+/**
+ * Interface for a mosaic shape
+ */
 public interface IMosaicShape
 {
     int getAverageColor();

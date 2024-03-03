@@ -1,10 +1,3 @@
-/*
- * ViewMosaicWindow.java
- *
- * created at 2023-10-30 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.frontend.window.mosaic;
 
 
@@ -19,6 +12,9 @@ import javax.swing.WindowConstants;
 import com.image.implementation.mosaic.base.ImageUtils;
 
 
+/**
+ * Window displaying a single mosaic after a successful mosaic creation
+ */
 public class ViewMosaicWindow extends JFrame
 {
     private static final long serialVersionUID = 1L;

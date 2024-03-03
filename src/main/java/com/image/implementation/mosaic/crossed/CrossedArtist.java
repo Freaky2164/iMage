@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.image.implementation.mosaic.AbstractArtist;
 import com.image.implementation.mosaic.AbstractShape;
+import com.image.implementation.mosaic.base.IMosaicArtist;
 import com.image.implementation.mosaic.base.TileShape;
 import com.image.implementation.mosaic.crossed.calculator.CrossedLeftCalculator;
 import com.image.implementation.mosaic.crossed.calculator.CrossedLowerCalculator;
@@ -15,7 +16,10 @@ import com.image.implementation.mosaic.crossed.calculator.CrossedRightCalculator
 import com.image.implementation.mosaic.crossed.calculator.CrossedUpperCalculator;
 
 
-public class CrossedArtist extends AbstractArtist
+/**
+ * This class represents an {@link IMosaicArtist} who uses crossed shapes as tiles.
+ */
+public final class CrossedArtist extends AbstractArtist
 {
     private Collection<BufferedImage> tiles;
     private List<AbstractShape> upper;

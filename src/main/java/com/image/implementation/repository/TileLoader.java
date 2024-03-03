@@ -1,10 +1,3 @@
-/*
- * TileLoader.java
- *
- * created at 2024-01-17 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.implementation.repository;
 
 
@@ -20,6 +13,9 @@ import javax.imageio.ImageIO;
 import com.image.domain.service.TileLoaderService;
 
 
+/**
+ * This class can be used to load tiles from the system file directory
+ */
 public class TileLoader implements TileLoaderService
 {
     protected String tilesPath;

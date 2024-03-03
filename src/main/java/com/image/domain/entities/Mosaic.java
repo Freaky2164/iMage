@@ -1,10 +1,3 @@
-/*
- * Mosaic.java
- *
- * created at 2023-10-30 by <p.faller@seeburger.de>
- *
- * Copyright (c) SEEBURGER AG, Germany. All Rights Reserved.
- */
 package com.image.domain.entities;
 
 
@@ -40,7 +33,24 @@ public class Mosaic
         this.name = name;
     }
 
-
+    
+    public Mosaic(UUID mosaicId, UUID imageId, BufferedImage image, Tile tile, String name, String path)
+    {
+        Objects.requireNonNull(mosaicId);
+        Objects.requireNonNull(imageId);
+        Objects.requireNonNull(image);
+        Objects.requireNonNull(tile);
+        Validate.notBlank(name);
+        Validate.notBlank(name);
+        this.mosaicId = mosaicId;
+        this.imageId = imageId;
+        this.image = image;
+        this.tile = tile;
+        this.name = name;
+        this.path = path;
+    }
+    
+    
     public UUID getMosaicId()
     {
         return mosaicId;
