@@ -9,6 +9,9 @@ import com.image.implementation.mosaic.base.IMosaicShape;
 import com.image.implementation.mosaic.crossed.calculator.CrossedLowerCalculator;
 
 
+/**
+ * This class represents a lower cross as {@link IMosaicShape}
+ */
 public class LowerCrossedShape extends AbstractShape
 {
     /**

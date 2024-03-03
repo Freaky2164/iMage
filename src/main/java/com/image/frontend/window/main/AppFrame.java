@@ -22,6 +22,9 @@ import com.image.domain.entities.ImageAggregate;
 import com.image.domain.service.MosaicController;
 
 
+/**
+ * Main window frame of the application
+ */
 public class AppFrame extends JFrame
 {
     private static final long serialVersionUID = 1L;

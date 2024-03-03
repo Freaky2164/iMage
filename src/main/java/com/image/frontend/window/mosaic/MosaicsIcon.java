@@ -19,6 +19,9 @@ import com.formdev.flatlaf.ui.FlatLineBorder;
 import com.image.domain.entities.Mosaic;
 
 
+/**
+ * This class is used to display mosaic images in the UI 
+ */
 public class MosaicsIcon extends JLabel
 {
     private static final long serialVersionUID = 1L;

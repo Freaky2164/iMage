@@ -35,6 +35,9 @@ import com.image.implementation.repository.FileSystemImageRepository;
 import com.image.implementation.repository.TileLoader;
 
 
+/**
+ * MosaicController works as a controller between the UI, the repository and the mosaic creation logic
+ */
 public class MosaicController implements MosaicCreationListener
 {
     private MosaicMaker mosaicMaker;
@@ -49,10 +52,11 @@ public class MosaicController implements MosaicCreationListener
         appFrame = new AppFrame(this);
         imageRepository = new FileSystemImageRepository();
         tileLoaderService = new TileLoader();
+        initialize();
     }
 
 
-    public void initialize()
+    private void initialize()
     {
         tiles = tileLoaderService.loadTiles();
         List<ImageAggregate> images = imageRepository.findAll();

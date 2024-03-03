@@ -14,6 +14,9 @@ import com.image.domain.exception.IllegalTileException;
 import com.image.implementation.mosaic.base.TileShape;
 
 
+/**
+ * Value object for a tile
+ */
 public final class Tile
 {
     public final TileShape shape;

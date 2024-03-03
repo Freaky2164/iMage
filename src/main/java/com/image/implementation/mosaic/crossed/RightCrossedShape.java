@@ -9,6 +9,9 @@ import com.image.implementation.mosaic.base.IMosaicShape;
 import com.image.implementation.mosaic.crossed.calculator.CrossedRightCalculator;
 
 
+/**
+ * This class represents a right cross as {@link IMosaicShape}
+ */
 public class RightCrossedShape extends AbstractShape
 {
     /**

@@ -16,6 +16,9 @@ import com.image.domain.entities.ImageAggregate;
 import com.image.domain.entities.Mosaic;
 
 
+/**
+ * Interface of all functions needed for the repository of the application
+ */
 public interface ImageRepository
 {
     Optional<ImageAggregate> findById(UUID imageId);

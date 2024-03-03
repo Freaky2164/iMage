@@ -33,6 +33,9 @@ import com.image.domain.service.MosaicController;
 import com.image.implementation.mosaic.base.ImageUtils;
 
 
+/**
+ * Menu for displaying mosaics in the UI
+ */
 public class MosaicsMenuWindow extends JFrame implements MosaicIconViewer
 {
     private static final long serialVersionUID = 1L;

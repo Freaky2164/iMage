@@ -24,6 +24,9 @@ import com.image.domain.service.MosaicController;
 import com.image.implementation.mosaic.base.ImageUtils;
 
 
+/**
+ * Panel for displaying images on the UI
+ */
 public class ImagesPanel extends JPanel implements ImageIconViewer
 {
     private static final long serialVersionUID = 1L;

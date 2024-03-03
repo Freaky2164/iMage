@@ -20,6 +20,9 @@ import com.formdev.flatlaf.ui.FlatLineBorder;
 import com.image.domain.service.MosaicController;
 
 
+/**
+ * This class is used to display images in the UI which can be selected for mosaic creation
+ */
 public class ImagesIcon extends JLabel
 {
     private static final long serialVersionUID = 1L;

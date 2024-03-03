@@ -7,7 +7,9 @@
  */
 package com.image.implementation.mosaic.base;
 
-
+/**
+ * Enum for categorizing the different shapes of tiles
+ */
 public enum TileShape
 {
     RECTANGLE("Rectangle"),

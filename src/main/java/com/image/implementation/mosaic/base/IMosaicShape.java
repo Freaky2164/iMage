@@ -10,7 +10,9 @@ package com.image.implementation.mosaic.base;
 
 import java.awt.image.BufferedImage;
 
-
+/**
+ * Interface for a mosaic shape
+ */
 public interface IMosaicShape
 {
     int getAverageColor();

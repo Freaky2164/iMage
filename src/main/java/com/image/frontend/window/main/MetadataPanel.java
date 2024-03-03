@@ -25,6 +25,9 @@ import com.formdev.flatlaf.ui.FlatLineBorder;
 import com.image.domain.entities.ImageAggregate;
 
 
+/**
+ * Panel displaying specific information about a selected image
+ */
 public class MetadataPanel extends JPanel
 {
     private static final long serialVersionUID = 1L;

@@ -34,7 +34,7 @@ public final class MosaicMaker implements MosaicMakerService
         }
         if (artist == null)
         {
-            throw new IllegalArgumentException("No artist provide");
+            throw new IllegalArgumentException("No artist provided");
         }
 
         BufferedImage inputImage = imageAggregate.getImage();

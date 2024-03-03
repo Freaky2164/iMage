@@ -9,9 +9,7 @@ import com.image.implementation.mosaic.base.IMosaicShape;
 
 
 /**
- * The abstract base class for all calculators for {@link IMosaicArtist} and
- * {@link IMosaicShape}.
- *
+ * The abstract base class for all calculators for {@link IMosaicArtist} and {@link IMosaicShape}.
  */
 public abstract class AbstractCalculator
 {

@@ -19,6 +19,9 @@ import javax.swing.WindowConstants;
 import com.image.implementation.mosaic.base.ImageUtils;
 
 
+/**
+ * Window displaying a single mosaic after a successful mosaic creation
+ */
 public class ViewMosaicWindow extends JFrame
 {
     private static final long serialVersionUID = 1L;

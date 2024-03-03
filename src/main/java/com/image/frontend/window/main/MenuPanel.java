@@ -27,6 +27,9 @@ import com.image.domain.service.MosaicController;
 import com.image.frontend.window.mosaic.MosaicsMenuWindow;
 
 
+/**
+ * Panel for specifing the details of the mosaic
+ */
 public class MenuPanel extends JPanel
 {
     private static final long serialVersionUID = 1L;

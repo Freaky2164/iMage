@@ -11,7 +11,9 @@ package com.image.implementation.mosaic.base;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-
+/**
+ * Utility class providing functionality for scaling images to given size
+ */
 public class ImageUtils
 {
     public static BufferedImage scale(BufferedImage originalImage, int targetWidth, int targetHeight)

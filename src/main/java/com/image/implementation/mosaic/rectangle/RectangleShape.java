@@ -9,7 +9,7 @@ import com.image.implementation.mosaic.base.IMosaicShape;
 
 
 /**
- * This class represents a rectangle as {@link IMosaicShape} based on an {@link FileInformation}.
+ * This class represents a rectangle as {@link IMosaicShape}
  */
 public class RectangleShape extends AbstractShape
 {

@@ -9,8 +9,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.image.implementation.mosaic.base.IMosaicArtist;
+import com.image.implementation.mosaic.base.IMosaicShape;
 
 
+/**
+ * This class represents an implementation of {@link IMosaicArtist} as an abstract class
+ */
 public abstract class AbstractArtist implements IMosaicArtist
 {
     protected final int tileWidth;

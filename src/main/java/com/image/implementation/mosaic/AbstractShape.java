@@ -8,6 +8,9 @@ import com.image.implementation.mosaic.base.IMosaicShape;
 import com.image.implementation.mosaic.base.ImageUtils;
 
 
+/**
+ * This class represents an implementation of {@link IMosaicShape} as an abstract class
+ */
 public abstract class AbstractShape implements IMosaicShape
 {
     protected final BufferedImage image;

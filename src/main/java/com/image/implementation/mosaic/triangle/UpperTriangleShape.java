@@ -9,8 +9,7 @@ import com.image.implementation.mosaic.base.IMosaicShape;
 
 
 /**
- * This abstract class represents an upper triangle as {@link IMosaicShape} based on an
- * {@link FileInformation}.
+ * This abstract class represents an upper triangle as {@link IMosaicShape}
  *
  * Two different triangles are possible: Upper and Lower.
  */

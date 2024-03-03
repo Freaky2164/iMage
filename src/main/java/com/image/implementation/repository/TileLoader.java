@@ -20,6 +20,9 @@ import javax.imageio.ImageIO;
 import com.image.domain.service.TileLoaderService;
 
 
+/**
+ * This class can be used to load tiles from the system file directory
+ */
 public class TileLoader implements TileLoaderService
 {
     protected String tilesPath;
