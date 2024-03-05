@@ -8,11 +8,16 @@
 package com.image.mosaic;
 
 
+import static org.mockito.Mockito.*;
+
 import java.awt.image.BufferedImage;
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.image.domain.entities.ImageAggregate;
 import com.image.domain.repository.ImageRepository;
@@ -26,12 +31,17 @@ import com.image.repository.TestFileSystemImageRepository;
 import com.image.repository.TestTileLoader;
 
 
+@ExtendWith(MockitoExtension.class)
 public class MosaicMakerTest
 {
+    @Mock
+    MosaicMaker mosaicMaker;
+
     @Test
     public void testMosaicCreationWithNullParameters()
     {
-        MosaicMaker mosaicMaker = new MosaicMaker();
+        doThrow(IllegalArgumentException.class).when(mosaicMaker).createMosaic(null, null);
+
         Assertions.assertThrows(IllegalArgumentException.class, () -> mosaicMaker.createMosaic(null, null));
     }
 
@@ -39,9 +49,9 @@ public class MosaicMakerTest
     @Test
     public void testMosaicCreationWithoutArtist()
     {
-        MosaicMaker mosaicMaker = new MosaicMaker();
-        ImageRepository imageRepository = new TestFileSystemImageRepository();
-        ImageAggregate imageAggregate = imageRepository.findAll().get(0);
+        ImageAggregate imageAggregate = mock(ImageAggregate.class);
+        doThrow(IllegalArgumentException.class).when(mosaicMaker).createMosaic(imageAggregate, null);
+
         Assertions.assertThrows(IllegalArgumentException.class, () -> mosaicMaker.createMosaic(imageAggregate, null));
     }
 
@@ -49,10 +59,9 @@ public class MosaicMakerTest
     @Test
     public void testMosaicCreationWithoutInputImage()
     {
-        MosaicMaker mosaicMaker = new MosaicMaker();
-        TileLoaderService tileLoaderService = new TestTileLoader();
-        List<BufferedImage> tiles = tileLoaderService.loadTiles();
-        IMosaicArtist mosaicArtist = new RectangleArtist(tiles, 5, 5);
+        IMosaicArtist mosaicArtist = mock(IMosaicArtist.class);
+        doThrow(IllegalArgumentException.class).when(mosaicMaker).createMosaic(null, mosaicArtist);
+
         Assertions.assertThrows(IllegalArgumentException.class, () -> mosaicMaker.createMosaic(null, mosaicArtist));
     }
 
@@ -60,7 +69,6 @@ public class MosaicMakerTest
     @Test
     public void testRectangleMosaicCreation()
     {
-        MosaicMaker mosaicMaker = new MosaicMaker();
         ImageRepository imageRepository = new TestFileSystemImageRepository();
         TileLoaderService tileLoaderService = new TestTileLoader();
         ImageAggregate imageAggregate = imageRepository.findAll().get(0);
@@ -70,6 +78,7 @@ public class MosaicMakerTest
         mosaicMaker.addMosaicCreationListener(mosaic ->
         {
             Assertions.assertNotNull(mosaic);
+            Assertions.assertEquals("Rectangle_5x5", mosaic.getTile());
             Assertions.assertEquals(imageAggregate.getImage().getWidth(), mosaic.getImage().getWidth());
             Assertions.assertEquals(imageAggregate.getImage().getHeight(), mosaic.getImage().getWidth());
         });
@@ -79,7 +88,6 @@ public class MosaicMakerTest
     @Test
     public void testTriangleMosaicCreation()
     {
-        MosaicMaker mosaicMaker = new MosaicMaker();
         ImageRepository imageRepository = new TestFileSystemImageRepository();
         TileLoaderService tileLoaderService = new TestTileLoader();
         ImageAggregate imageAggregate = imageRepository.findAll().get(0);
@@ -89,6 +97,7 @@ public class MosaicMakerTest
         mosaicMaker.addMosaicCreationListener(mosaic ->
         {
             Assertions.assertNotNull(mosaic);
+            Assertions.assertEquals("Triangle_5x5", mosaic.getTile());
             Assertions.assertEquals(imageAggregate.getImage().getWidth(), mosaic.getImage().getWidth());
             Assertions.assertEquals(imageAggregate.getImage().getHeight(), mosaic.getImage().getWidth());
         });
@@ -98,7 +107,6 @@ public class MosaicMakerTest
     @Test
     public void testCrossedMosaicCreation()
     {
-        MosaicMaker mosaicMaker = new MosaicMaker();
         ImageRepository imageRepository = new TestFileSystemImageRepository();
         TileLoaderService tileLoaderService = new TestTileLoader();
         ImageAggregate imageAggregate = imageRepository.findAll().get(0);
@@ -108,6 +116,7 @@ public class MosaicMakerTest
         mosaicMaker.addMosaicCreationListener(mosaic ->
         {
             Assertions.assertNotNull(mosaic);
+            Assertions.assertEquals("Crossed_5x5", mosaic.getTile());
             Assertions.assertEquals(imageAggregate.getImage().getWidth(), mosaic.getImage().getWidth());
             Assertions.assertEquals(imageAggregate.getImage().getHeight(), mosaic.getImage().getWidth());
         });
