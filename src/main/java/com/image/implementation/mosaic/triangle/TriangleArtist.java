@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.image.implementation.mosaic.AbstractArtist;
-import com.image.implementation.mosaic.AbstractShape;
+import com.image.implementation.AbstractArtist;
+import com.image.implementation.AbstractShape;
 import com.image.implementation.mosaic.base.IMosaicArtist;
 import com.image.implementation.mosaic.base.TileShape;
 

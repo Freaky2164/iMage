@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import com.image.domain.entities.ImageAggregate;
 import com.image.domain.repository.ImageRepository;
 import com.image.domain.service.TileLoaderService;
-import com.image.implementation.mosaic.MosaicMaker;
+import com.image.implementation.MosaicMaker;
 import com.image.implementation.mosaic.base.IMosaicArtist;
 import com.image.implementation.mosaic.crossed.CrossedArtist;
 import com.image.implementation.mosaic.rectangle.RectangleArtist;

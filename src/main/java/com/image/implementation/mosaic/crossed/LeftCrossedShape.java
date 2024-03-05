@@ -3,8 +3,8 @@ package com.image.implementation.mosaic.crossed;
 
 import java.awt.image.BufferedImage;
 
-import com.image.implementation.mosaic.AbstractCalculator;
-import com.image.implementation.mosaic.AbstractShape;
+import com.image.implementation.AbstractCalculator;
+import com.image.implementation.AbstractShape;
 import com.image.implementation.mosaic.base.IMosaicShape;
 import com.image.implementation.mosaic.crossed.calculator.CrossedLeftCalculator;
 

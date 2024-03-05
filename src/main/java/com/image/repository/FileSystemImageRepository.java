@@ -1,4 +1,4 @@
-package com.image.implementation.repository;
+package com.image.repository;
 
 
 import java.awt.image.BufferedImage;

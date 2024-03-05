@@ -7,10 +7,6 @@
  */
 package com.image.repository;
 
-
-import com.image.implementation.repository.FileSystemImageRepository;
-
-
 public class TestFileSystemImageRepository extends FileSystemImageRepository
 {
     public TestFileSystemImageRepository()

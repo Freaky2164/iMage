@@ -1,4 +1,4 @@
-package com.image.implementation.mosaic;
+package com.image.implementation;
 
 
 import java.awt.image.BufferedImage;

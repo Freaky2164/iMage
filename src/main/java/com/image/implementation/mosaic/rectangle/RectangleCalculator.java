@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 import java.util.Iterator;
 import java.util.stream.IntStream;
 
-import com.image.implementation.mosaic.AbstractCalculator;
+import com.image.implementation.AbstractCalculator;
 
 
 /**

@@ -19,13 +19,13 @@ import com.image.domain.repository.ImageRepository;
 import com.image.frontend.listener.MosaicCreationListener;
 import com.image.frontend.window.main.AppFrame;
 import com.image.frontend.window.mosaic.ViewMosaicWindow;
-import com.image.implementation.mosaic.AbstractArtist;
-import com.image.implementation.mosaic.MosaicMaker;
+import com.image.implementation.AbstractArtist;
+import com.image.implementation.MosaicMaker;
 import com.image.implementation.mosaic.crossed.CrossedArtist;
 import com.image.implementation.mosaic.rectangle.RectangleArtist;
 import com.image.implementation.mosaic.triangle.TriangleArtist;
-import com.image.implementation.repository.FileSystemImageRepository;
-import com.image.implementation.repository.TileLoader;
+import com.image.repository.FileSystemImageRepository;
+import com.image.repository.TileLoader;
 
 
 /**

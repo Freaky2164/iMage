@@ -7,10 +7,6 @@
  */
 package com.image.repository;
 
-
-import com.image.implementation.repository.TileLoader;
-
-
 public class TestTileLoader extends TileLoader
 {
     public TestTileLoader()

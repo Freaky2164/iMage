@@ -1,4 +1,4 @@
-package com.image.implementation.mosaic;
+package com.image.implementation;
 
 
 import java.awt.AlphaComposite;
@@ -96,13 +96,13 @@ public final class MosaicMaker implements MosaicMakerService
     }
 
 
-    private BufferedImage setSubimage(BufferedImage inputImage, BufferedImage tile, int x, int y)
+    private BufferedImage setSubimage(BufferedImage resultImage, BufferedImage tile, int x, int y)
     {
-        Graphics2D graphics2d = inputImage.createGraphics();
+        Graphics2D graphics2d = resultImage.createGraphics();
         graphics2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
         graphics2d.drawImage(tile, x, y, null);
         graphics2d.dispose();
-        return inputImage;
+        return resultImage;
     }
 
 
